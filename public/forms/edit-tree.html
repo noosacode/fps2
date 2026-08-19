@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit Tree</title><link rel="stylesheet" href="/css/tree-workflow.css"></head><body><nav><a href="/index.html">Home</a></nav><h1 id="page-title">Edit Tree</h1><p id="message" class="message" role="alert"></p><form id="tree-form" hidden>
+  <label>Tree tag <input id="tag" name="tag" readonly></label>
+  <label>Position <input name="position" type="number" step="1" required></label>
+  <label>Colour <input name="colour" required></label>
+  <label>WooCommerce status <input name="wcStatus" required></label>
+  <label>WooCommerce last changed <input name="wcLastChanged" type="date"></label>
+  <label>Sell score <input name="sellScore" type="number" step="1" required></label>
+  <label>Bag size <input name="bagSize" required></label>
+  <label>Price <input name="price" type="number" step="0.01"></label>
+  <label>Photo quality <input name="photoQuality" type="number" step="1"></label>
+  <label>Best photo date <input name="bestPhotoDate" type="date"></label>
+  <label>Recent photo date <input name="recentPhotoDate" type="date"></label>
+  <label>Transport size <input name="transportSize" required></label>
+  <label>Relative size <input name="relativeSize" required></label>
+  <label>Soil percent <input name="soilPercent" type="number" step="0.01"></label>
+  <label>Date added <input name="dateAdded" type="date" required></label>
+  <label>Notes <textarea name="notes"></textarea></label>
+  <button type="submit">Save changes</button><button id="search-button" type="button">Search for another tree</button>
+</form><script src="/forms/edit-tree.js"></script></body></html>

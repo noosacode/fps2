@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px 15px;
+}
+
+td:first-child {
+    text-align: left;
+}
+
+td:last-child {
+    text-align: left;
+}

@@ -1,0 +1,5 @@
+body { max-width: 760px; margin: 32px auto; padding: 0 18px; font-family: Arial, sans-serif; line-height: 1.4; }
+nav { margin-bottom: 28px; } nav a, .actions a { margin-right: 14px; }
+label { display: block; margin: 12px 0; } input, textarea { box-sizing: border-box; width: min(100%, 440px); padding: 8px; } textarea { min-height: 100px; }
+button { padding: 8px 14px; margin: 8px 8px 8px 0; cursor: pointer; } .message { min-height: 1.5em; color: #9b1c1c; } .actions { margin-top: 20px; }
+table { width: 100%; border-collapse: collapse; } th, td { padding: 9px; border-bottom: 1px solid #ccc; text-align: left; vertical-align: top; } th { width: 38%; }
