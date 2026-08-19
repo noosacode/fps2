@@ -4,6 +4,7 @@ const express = require("express");
 console.log(process.env.MONGODB_URI?.substring(0, 30));
 const mongoose = require("mongoose");
 const FrangipaniTree = require("./backend/models/FrangipaniTree");
+const Fp2Event = require("./backend/models/Fp2Event");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("./backend/models/User");
@@ -11,6 +12,72 @@ const auth = require("./backend/middleware/auth");
 
 const app = express();
 app.use(express.json());
+
+const treeFields = [
+  "tag",
+  "position",
+  "colour",
+  "wcStatus",
+  "wcLastChanged",
+  "sellScore",
+  "bagSize",
+  "price",
+  "photoQuality",
+  "bestPhotoDate",
+  "recentPhotoDate",
+  "transportSize",
+  "relativeSize",
+  "soilPercent",
+  "dateAdded",
+  "notes",
+];
+const dateFields = new Set([
+  "wcLastChanged",
+  "bestPhotoDate",
+  "recentPhotoDate",
+  "dateAdded",
+]);
+
+function eventValue(value) {
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+
+  return value === undefined ? null : value;
+}
+
+function valuesMatch(field, first, second) {
+  const firstValue = eventValue(first);
+  const secondValue = eventValue(second);
+
+  if (dateFields.has(field) && typeof firstValue === "string" && typeof secondValue === "string") {
+    const firstDate = Date.parse(firstValue);
+    const secondDate = Date.parse(secondValue);
+    if (!Number.isNaN(firstDate) && !Number.isNaN(secondDate)) {
+      return firstDate === secondDate;
+    }
+  }
+
+  return firstValue === secondValue;
+}
+
+function changedFields(before, after) {
+  return treeFields
+    .filter((field) => !valuesMatch(field, before[field], after[field]))
+    .map((field) => ({
+      field,
+      previousValue: eventValue(before[field]),
+      newValue: eventValue(after[field]),
+    }));
+}
+
+async function writeJournalEvent({ tag, eventType, username, changes }) {
+  if (changes.length === 0) {
+    return;
+  }
+
+  await Fp2Event.create({ tag, eventType, username, changes });
+}
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -115,27 +182,58 @@ app.get("/api/trees/position/:position", auth, async (req, res) => {
 });
 
 app.put("/api/trees/:tag", auth, async function (req, res) {
-  const tree = await FrangipaniTree.findOneAndUpdate(
-    { tag: req.params.tag },
-    req.body,
-    { returnDocument: "after" },
-  );
+  try {
+    const tree = await FrangipaniTree.findOne({ tag: req.params.tag });
 
-  if (!tree) {
-    return res.status(404).json({
-      message: "Tree not found.",
-    });
+    if (!tree) {
+      return res.status(404).json({
+        message: "Tree not found.",
+      });
+    }
+
+    const before = tree.toObject();
+    const updates = Object.fromEntries(
+      Object.entries(req.body).filter(
+        ([field, value]) => treeFields.includes(field) && field !== "tag" && value !== undefined,
+      ),
+    );
+
+    tree.set(updates);
+    await tree.validate();
+    const changes = changedFields(before, tree.toObject());
+
+    if (changes.length > 0) {
+      await tree.save();
+      await writeJournalEvent({
+        tag: tree.tag,
+        eventType: "updated",
+        username: req.user.username,
+        changes,
+      });
+    }
+
+    res.json(tree);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
-
-  res.json(tree);
 });
 
 app.post("/api/trees", auth, async function (req, res) {
-  const tree = new FrangipaniTree(req.body);
+  try {
+    const tree = new FrangipaniTree(req.body);
+    await tree.save();
 
-  await tree.save();
+    await writeJournalEvent({
+      tag: tree.tag,
+      eventType: "created",
+      username: req.user.username,
+      changes: changedFields({}, tree.toObject()),
+    });
 
-  res.status(201).json(tree);
+    res.status(201).json(tree);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 if (require.main === module) {
