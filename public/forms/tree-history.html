@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tree History</title>
+    <link rel="stylesheet" href="/css/tree-workflow.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/index.html">Home</a>
+    </nav>
+
+    <h1>Search history</h1>
+
+    <form id="tree-history-form" novalidate>
+        <label for="tag">
+            Tree tag
+            <input id="tag" name="tag" autocomplete="off" autofocus placeholder="Enter tag number" required>
+        </label>
+
+        <button type="submit">Search history</button>
+    </form>
+
+    <p id="message" class="message" role="alert"></p>
+
+    <div id="history-results"></div>
+
+    <script src="/forms/tree-history.js"></script>
+
+</body>
+
+</html>
