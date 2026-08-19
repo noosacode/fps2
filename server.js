@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 const User = require("./backend/models/User");
 const auth = require("./backend/middleware/auth");
 
+
 const app = express();
 app.use(express.json());
 
@@ -90,6 +91,17 @@ mongoose
   });
 
 app.use(express.static("public"));
+
+const FrangipaniTrees = require("./backend/models/FrangipaniTree");
+
+app.get("/api/trees/turnon", auth, async (req, res) => {
+  try {
+    const items = await FrangipaniTree.find(); // or whatever your model is
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.post("/register", async (req, res) => {
   try {

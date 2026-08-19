@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Search</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <p><a href="/index.html">Home</a></p>
+    <h1>Filtered Search</h1>
+    <p>Leave a field blank to include all trees.</p>
+
+    <form id="searchForm">
+        <p><label>Tag contains <input type="search" id="tag" name="tag"></label></p>
+        <p><label>Colour <input type="text" id="colour" name="colour"></label></p>
+        <p><label>WooCommerce status <input type="text" id="wcStatus" name="wcStatus"></label></p>
+        <p><label>Bag size <input type="text" id="bagSize" name="bagSize"></label></p>
+        <p><label>Position from <input type="number" id="minPosition" name="minPosition"></label>
+            <label>to <input type="number" id="maxPosition" name="maxPosition"></label>
+        </p>
+        <p><label>Minimum sell score <input type="number" id="minSellScore" name="minSellScore" min="0"></label></p>
+        <p><label>Notes contain <input type="search" id="keywords" name="keywords"></label></p>
+        <button type="submit">Find Trees</button>
+        <button type="reset" id="clearButton">Clear filters</button>
+    </form>
+
+    <div id="results" aria-live="polite"></div>
+    <script src="/js/filtered-list.js"></script>
+</body>
+
+</html>
