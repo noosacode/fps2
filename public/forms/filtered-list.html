@@ -1,34 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filtered Search</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Filtered List</title>
+    <link rel="stylesheet" href="/css/tree-workflow.css">
 </head>
 
 <body>
-    <p><a href="/index.html">Home</a></p>
-    <h1>Filtered Search</h1>
-    <p>Leave a field blank to include all trees.</p>
+    <nav>
+        <a href="/index.html">Home</a>
+    </nav>
 
-    <form id="searchForm">
-        <p><label>Tag contains <input type="search" id="tag" name="tag"></label></p>
-        <p><label>Colour <input type="text" id="colour" name="colour"></label></p>
-        <p><label>WooCommerce status <input type="text" id="wcStatus" name="wcStatus"></label></p>
-        <p><label>Bag size <input type="text" id="bagSize" name="bagSize"></label></p>
-        <p><label>Position from <input type="number" id="minPosition" name="minPosition"></label>
-            <label>to <input type="number" id="maxPosition" name="maxPosition"></label>
-        </p>
-        <p><label>Minimum sell score <input type="number" id="minSellScore" name="minSellScore" min="0"></label></p>
-        <p><label>Notes contain <input type="search" id="keywords" name="keywords"></label></p>
-        <button type="submit">Find Trees</button>
-        <button type="reset" id="clearButton">Clear filters</button>
+    <h1>Filtered list</h1>
+
+    <!-- Filtering fields follow the same pattern as other forms -->
+    <form id="filtered-list-form" novalidate>
+        <label for="tagContains">
+            Tag contains
+            <input id="tagContains" name="tagContains" type="text" autocomplete="off" placeholder="e.g. 12w or 560">
+        </label>
+
+        <label for="colour">
+            Colour
+            <input id="colour" name="colour" type="text" autocomplete="off" placeholder="e.g. White">
+        </label>
+
+        <label for="wcStatus">
+            WooCommerce status
+            <input id="wcStatus" name="wcStatus" type="text" autocomplete="off" placeholder="e.g. In stock">
+        </label>
+
+        <label for="bagSize">
+            Bag size
+            <input id="bagSize" name="bagSize" type="text" autocomplete="off" placeholder="e.g. 3-gallon">
+        </label>
+
+        <label for="firstPosition">
+            Position from
+            <input id="firstPosition" name="firstPosition" type="number" min="101" max="999999" autocomplete="off"
+                required>
+        </label>
+
+        <label for="lastPosition">
+            to
+            <input id="lastPosition" name="lastPosition" type="number" min="101" max="999999" autocomplete="off"
+                required>
+        </label>
+
+        <label for="minSellScore">
+            Minimum sell score
+            <input id="minSellScore" name="minSellScore" type="number" min="0" step="1" placeholder="0">
+        </label>
+
+        <label for="notesContains">
+            Notes
+            <input id="notesContains" name="notesContains" type="text" autocomplete="off" placeholder="search notes">
+        </label>
+
+<label>
+     Notes (General) is not empty
+    <input type="checkbox" id="notesGeneralNotEmpty" name="notesGeneralNotEmpty">
+</label>
+
+
+        <label for="notesOutsideContains">
+            Outside notes
+            <input id="notesOutsideContains" name="notesOutsideContains" type="text" autocomplete="off"
+                placeholder="search outside notes">
+        </label>
+
+        <label for="notesInsideContains">
+            Inside notes
+            <input id="notesInsideContains" name="notesInsideContains" type="text" autocomplete="off"
+                placeholder="search inside notes">
+        </label>
+
+        <div>
+            <button type="submit">Search</button>
+            <button type="button" id="clearBtn">Clear</button>
+        </div>
     </form>
 
-    <div id="results" aria-live="polite"></div>
-    <script src="/js/filtered-list.js"></script>
+    <p id="message" class="message" role="alert"></p>
+
+    <div id="results"></div>
+
+    <script src="/forms/filtered-list.js"></script>
 </body>
 
 </html>

@@ -31,6 +31,9 @@ const treeFields = [
   "soilPercent",
   "dateAdded",
   "notes",
+  "notesGeneral",
+  "notesOutside",
+  "notesInside",
 ];
 const dateFields = new Set([
   "wcLastChanged",
@@ -96,12 +99,18 @@ const FrangipaniTrees = require("./backend/models/FrangipaniTree");
 
 app.get("/api/trees/turnon", auth, async (req, res) => {
   try {
-    const items = await FrangipaniTree.find(); // or whatever your model is
+    const items = await FrangipaniTree.find({
+      wcStatus: { $ne: "on" },
+      sellScore: { $gte: 7 },
+    });
+
     res.json(items);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 app.post("/register", async (req, res) => {
   try {

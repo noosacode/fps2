@@ -5,7 +5,24 @@ const editForm = document.getElementById("tree-form");
 const editMessage = document.getElementById("message");
 let isDirty = false;
 const requiredDefaults = { position: 0, colour: "Not recorded yet", wcStatus: "Never added to WC", sellScore: 0, bagSize: "Not recorded yet", transportSize: "Not recorded yet", relativeSize: "Not recorded yet" };
-const fieldNames = ["position", "colour", "wcStatus", "wcLastChanged", "sellScore", "bagSize", "price", "photoQuality", "bestPhotoDate", "recentPhotoDate", "transportSize", "relativeSize", "soilPercent", "dateAdded", "notes"];
+const fieldNames = [
+  "position",
+  "colour",
+  "wcStatus",
+  "wcLastChanged",
+  "sellScore",
+  "bagSize",
+  "price",
+  "photoQuality",
+  "bestPhotoDate",
+  "recentPhotoDate",
+  "transportSize",
+  "relativeSize",
+  "soilPercent",
+  "dateAdded",
+  "notes",
+  "notesGeneral",
+];
 const numericFields = new Set(["position", "sellScore", "price", "photoQuality", "soilPercent"]);
 const dateFields = new Set(["wcLastChanged", "bestPhotoDate", "recentPhotoDate", "dateAdded"]);
 
