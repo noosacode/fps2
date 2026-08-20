@@ -22,6 +22,8 @@ const fieldNames = [
   "dateAdded",
   "notes",
   "notesGeneral",
+  "notesOutside",
+  "notesInside",
 ];
 const numericFields = new Set(["position", "sellScore", "price", "photoQuality", "soilPercent"]);
 const dateFields = new Set(["wcLastChanged", "bestPhotoDate", "recentPhotoDate", "dateAdded"]);

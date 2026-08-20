@@ -8,8 +8,8 @@ const bagSizeInput = document.getElementById("bagSize");
 const minSellScoreInput = document.getElementById("minSellScore");
 const notesContainsInput = document.getElementById("notesContains");
 const notesGeneralNotEmptyInput = document.getElementById("notesGeneralNotEmpty");
-const notesOutsideContainsInput = document.getElementById("notesOutsideContains");
-const notesInsideContainsInput = document.getElementById("notesInsideContains");
+const notesOutsideNotEmptyInput = document.getElementById("notesOutsideNotEmpty");
+const notesInsideNotEmptyInput = document.getElementById("notesInsideNotEmpty");
 const message = document.getElementById("message");
 const results = document.getElementById("results");
 const clearBtn = document.getElementById("clearBtn");
@@ -98,38 +98,34 @@ function applyFilters(trees) {
     ? Number(minSellScoreInput.value)
     : null;
   const notesFilter = notesContainsInput.value.trim();
+
   const notesGeneralNotEmpty = notesGeneralNotEmptyInput.checked;
-  const notesOutsideFilter = notesOutsideContainsInput.value.trim();
-  const notesInsideFilter = notesInsideContainsInput.value.trim();
+  const notesOutsideNotEmpty = notesOutsideNotEmptyInput.checked;
+  const notesInsideNotEmpty = notesInsideNotEmptyInput.checked;
 
   return trees.filter((tree) => {
     if (tagFilter && !matchContains(tree.tag, tagFilter)) return false;
     if (colourFilter && !matchContains(tree.colour, colourFilter)) return false;
     if (wcFilter && !matchExact(tree.wcStatus, wcFilter)) return false;
     if (bagFilter && !matchContains(tree.bagSize, bagFilter)) return false;
+
     if (
       minSell !== null &&
       (tree.sellScore === undefined ||
         tree.sellScore === null ||
         Number(tree.sellScore) < minSell)
-    )
+    ) {
       return false;
-    if (notesFilter && !matchContains(tree.notes, notesFilter)) return false;
-    // Checkbox: must NOT be empty
-    if (notesGeneralNotEmpty && !tree.notesGeneral?.trim()) return false;
+    }
 
-    if (
-      notesOutsideFilter &&
-      !matchContains(tree.notesOutside, notesOutsideFilter)
-    )
-      return false;
-    if (
-      notesInsideFilter &&
-      !matchContains(tree.notesInside, notesInsideFilter)
-    )
-      return false;
+    if (notesFilter && !matchContains(tree.notes, notesFilter)) return false;
+
+    if (notesGeneralNotEmpty && !tree.notesGeneral?.trim()) return false;
+    if (notesOutsideNotEmpty && !tree.notesOutside?.trim()) return false;
+    if (notesInsideNotEmpty && !tree.notesInside?.trim()) return false;
+
     return true;
-  };);
+  });
 }
 
 form.addEventListener("submit", async (event) => {
@@ -209,8 +205,8 @@ clearBtn.addEventListener("click", () => {
   minSellScoreInput.value = "";
   notesContainsInput.value = "";
   notesGeneralNotEmptyInput.checked = false;
-  notesOutsideContainsInput.value = "";
-  notesInsideContainsInput.value = "";
+  notesOutsideNotEmptyInput.checked = false;
+  notesInsideNotEmptyInput.checked = false;
   message.textContent = "";
   clearResults();
 });
