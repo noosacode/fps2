@@ -239,6 +239,22 @@ app.put("/api/trees/:tag", auth, async function (req, res) {
   }
 });
 
+app.delete("/api/trees/:tag", auth, async (req, res) => {
+  try {
+    const tree = await FrangipaniTree.findOneAndDelete({
+      tag: req.params.tag,
+    });
+
+    if (!tree) {
+      return res.status(404).json({ message: "Tree not found." });
+    }
+
+    res.json({ message: "Tree deleted." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get("/api/events/:tag", auth, async function (req, res) {
   const events = await Fp2Event.find({
     tag: req.params.tag,
