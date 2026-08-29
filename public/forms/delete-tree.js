@@ -11,7 +11,7 @@ form.addEventListener("submit", async (event) => {
 
   if (!isValidTag(tag)) {
     message.textContent =
-      "Enter a three-digit tag (101–999) or digits followed by letters, such as 12w.";
+      "Enter a three-digit tag (100-999) or digits followed by letters, such as 12w.";
     return;
   }
 

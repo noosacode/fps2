@@ -15,12 +15,12 @@ findButton.addEventListener("click", async () => {
   if (
     !/^\d+$/.test(first) ||
     !/^\d+$/.test(last) ||
-    Number(first) < 101 ||
+    Number(first) < 100 ||
     Number(first) > 99999 ||
-    Number(last) < 101 ||
+    Number(last) < 100 ||
     Number(last) > 999999
   ) {
-    alert("Please enter values between 101 and 99999.");
+    alert("Please enter values between 100 and 99999.");
     return;
   }
 
