@@ -20,7 +20,7 @@ loginBtn.addEventListener("click", async () => {
   alert("Login successful!");
 
     } else {
-      alert(data.message || "Login failed");
+    alert(data.message || "Login failed");
     }
   } catch (err) {
     console.error(err);
