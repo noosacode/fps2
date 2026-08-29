@@ -72,6 +72,7 @@ findButton.addEventListener("click", async () => {
   results.innerHTML = `
     <table border="1">
         <tr>
+            <button id="saveButton">Submit</button>
             <th>Position</th>
             <th>Tag</th>
             <th>Flower colour</th>
@@ -80,7 +81,6 @@ findButton.addEventListener("click", async () => {
         </tr>
         ${rows.join("")}
     </table>
-    <button id="saveButton">Submit</button>
 `;
 
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
