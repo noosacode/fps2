@@ -70,15 +70,18 @@ findButton.addEventListener("click", async () => {
   }
 
   results.innerHTML = `
-              <button id="saveButton">Submit</button>
+  <div class="save-area">
+    <button id="saveButton">Submit</button>
+  </div>
 
     <table border="1">
+      <table border="1">
         <tr>
             <th>Position</th>
             <th>Tag</th>
             <th>Flower colour</th>
             <th>Bag size</th>
-            <th>Missing</th>
+            <th>Moved</th>
         </tr>
         ${rows.join("")}
     </table>
