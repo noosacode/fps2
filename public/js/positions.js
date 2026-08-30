@@ -70,9 +70,10 @@ findButton.addEventListener("click", async () => {
   }
 
   results.innerHTML = `
+              <button id="saveButton">Submit</button>
+
     <table border="1">
         <tr>
-            <button id="saveButton">Submit</button>
             <th>Position</th>
             <th>Tag</th>
             <th>Flower colour</th>
