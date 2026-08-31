@@ -20,6 +20,8 @@ form.addEventListener("submit", async (event) => {
       headers: { Authorization: localStorage.getItem("token") },
     });
 
+    if (handleAuthFailure(response)) return;
+
     if (response.ok) {
       const tree = await response.json();
       const treeDetails = document.getElementById("tree-details");

@@ -21,7 +21,7 @@ function clearResults() {
 function isValidPosition(value) {
   return (
     /^\d+$/.test(String(value)) &&
-    Number(value) >= 100 &&
+    Number(value) >= 0 &&
     Number(value) <= 999999
   );
 }
@@ -143,7 +143,7 @@ form.addEventListener("submit", async (event) => {
   }
 
   if (!isValidPosition(firstValue) || !isValidPosition(lastValue)) {
-    message.textContent = "Please enter valid positions from 100 to 999999.";
+    message.textContent = "Please enter position numbers from 99 to 99999.";
     return;
   }
 
@@ -160,6 +160,8 @@ form.addEventListener("submit", async (event) => {
         Authorization: localStorage.getItem("token"),
       },
     });
+
+    if (handleAuthFailure(response)) return;
 
     const trees = await response.json();
 

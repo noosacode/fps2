@@ -7,6 +7,8 @@ async function loadTurnOnList() {
     },
   });
 
+  if (handleAuthFailure(response)) return;
+
   const trees = await response.json();
 
   if (!response.ok) {

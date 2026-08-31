@@ -29,6 +29,8 @@ form.addEventListener("submit", async (event) => {
       },
     });
 
+    if (handleAuthFailure(response)) return;
+
     const events = await response.json();
 
     if (!response.ok) {

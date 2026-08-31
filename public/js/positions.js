@@ -75,15 +75,14 @@ findButton.addEventListener("click", async () => {
   </div>
 
     <table border="1">
-      <table border="1">
-        <tr>
-            <th>Position</th>
-            <th>Tag</th>
-            <th>Flower colour</th>
-            <th>Bag size</th>
-            <th>Moved</th>
-        </tr>
-        ${rows.join("")}
+      <tr>
+        <th>Position</th>
+        <th>Tag</th>
+        <th>Flower colour</th>
+        <th>Bag size</th>
+        <th>Moved</th>
+      </tr>
+      ${rows.join("")}
     </table>
 `;
 
@@ -117,6 +116,9 @@ findButton.addEventListener("click", async () => {
           position: newPosition,
         }),
       });
+
+      if (handleAuthFailure(response)) return;
+      
       const savedTree = await response.json();
     }
     findButton.click();
