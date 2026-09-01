@@ -1,0 +1,16 @@
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin: 20px 0;
+}
+
+.home-card {
+    display: block;
+    padding: 1px;
+    background: #ddd;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+}
