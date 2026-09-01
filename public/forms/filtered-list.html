@@ -26,12 +26,17 @@
             Colour
             <input id="colour" name="colour" type="text" autocomplete="off" placeholder="e.g. White">
         </label>
-
-        <label for="wcStatus">
+        <label for="wcStatusSelect">
             WooCommerce status
-            <input id="wcStatus" name="wcStatus" type="text" autocomplete="off" placeholder="e.g. In stock">
-        </label>
-
+            <select name="wcStatus" id="wcStatus">
+                <option value="">All</option>
+                <option value="Never added to WC">Never added to WC</option>
+                <option value="on">on</option>
+                <option value="off">off</option>
+                <option value="sold - on">sold - on</option>
+                <option value="sold - off">sold - off</option>
+            </select>
+        </label>     
         <label for="bagSize">
             Bag size
             <input id="bagSize" name="bagSize" type="text" autocomplete="off" placeholder="e.g. 3-gallon">
@@ -53,23 +58,28 @@
             Minimum sell score
             <input id="minSellScore" name="minSellScore" type="number" min="0" step="1" placeholder="0">
         </label>
+        
+        <label for="maxSellScore">
+            Maximum sell score
+            <input id="maxSellScore" name="maxSellScore" type="number" min="0" step="1" placeholder="9">
+        </label>
 
         <label for="notesContains">
             Notes
             <input id="notesContains" name="notesContains" type="text" autocomplete="off" placeholder="search notes">
         </label>
 
-        <label>
+        <label for="notesGeneralNotEmpty">
             Notes (General) is not empty
             <input type="checkbox" id="notesGeneralNotEmpty" name="notesGeneralNotEmpty">
         </label>
         
-        <label>
+        <label for="notesOutsideNotEmpty">
             Outside notes is not empty
             <input type="checkbox" id="notesOutsideNotEmpty" name="notesOutsideNotEmpty">
         </label>
         
-        <label>
+        <label for="notesInsideNotEmpty">
             Inside notes is not empty
             <input type="checkbox" id="notesInsideNotEmpty" name="notesInsideNotEmpty">
         </label>

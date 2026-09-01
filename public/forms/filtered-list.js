@@ -6,6 +6,9 @@ const colourInput = document.getElementById("colour");
 const wcStatusInput = document.getElementById("wcStatus");
 const bagSizeInput = document.getElementById("bagSize");
 const minSellScoreInput = document.getElementById("minSellScore");
+const maxSellScoreInput = document.getElementById("maxSellScore");
+console.log("min:", minSellScoreInput);
+console.log("max:", maxSellScoreInput);
 const notesContainsInput = document.getElementById("notesContains");
 const notesGeneralNotEmptyInput = document.getElementById("notesGeneralNotEmpty");
 const notesOutsideNotEmptyInput = document.getElementById("notesOutsideNotEmpty");
@@ -97,8 +100,10 @@ function applyFilters(trees) {
   const minSell = minSellScoreInput.value
     ? Number(minSellScoreInput.value)
     : null;
+  const maxSell = maxSellScoreInput.value
+    ? Number(maxSellScoreInput.value)
+    : null;
   const notesFilter = notesContainsInput.value.trim();
-
   const notesGeneralNotEmpty = notesGeneralNotEmptyInput.checked;
   const notesOutsideNotEmpty = notesOutsideNotEmptyInput.checked;
   const notesInsideNotEmpty = notesInsideNotEmptyInput.checked;
@@ -114,6 +119,15 @@ function applyFilters(trees) {
       (tree.sellScore === undefined ||
         tree.sellScore === null ||
         Number(tree.sellScore) < minSell)
+    ) {
+      return false;
+    }
+
+    if (
+      maxSell !== null &&
+      (tree.sellScore === undefined ||
+        tree.sellScore === null ||
+        Number(tree.sellScore) > maxSell)
     ) {
       return false;
     }
