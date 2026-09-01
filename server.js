@@ -110,7 +110,18 @@ app.get("/api/trees/turnon", auth, async (req, res) => {
   }
 });
 
+app.get("/api/trees/turnoff", auth, async (req, res) => {
+  try {
+    const items = await FrangipaniTree.find({
+      wcStatus: "on",
+      sellScore: { $lt: 7 },
+    }).sort({ sellScore: -1 });
 
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.post("/register", async (req, res) => {
   try {
