@@ -190,7 +190,7 @@ form.addEventListener("submit", async (event) => {
     }
 
     // Safety limit to avoid rendering too many rows in the browser
-    const MAX_ROWS = 500;
+    const MAX_ROWS = 100;
     if (trees.length > MAX_ROWS) {
       message.textContent = `Search returned ${trees.length} trees — narrow the position range or add filters. (Limit ${MAX_ROWS})`;
       return;
