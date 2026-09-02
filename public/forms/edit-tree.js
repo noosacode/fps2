@@ -110,6 +110,8 @@ editForm.addEventListener("submit", async (event) => {
   editMessage.textContent = "";
   const payload = {};
   fieldNames.forEach((name) => {
+    if (mode === "update" && name === "dateAdded") return;
+
     const value = editForm.elements[name].value.trim();
     payload[name] = numericFields.has(name)
       ? value === ""
