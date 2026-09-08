@@ -78,16 +78,92 @@ function getFeatureUpdate() {
     return { sellScore: Number(score) };
   }
 
-  if (feature === "rootsScore") {
-    return { rootsScore: Number(score), sellScore: Number(score) };
+  if (feature === "bentTrunk") {
+    return { bentTrunk: Number(score), sellScore: Number(score) };
   }
 
-  if (feature === "shapeScore") {
-    return { shapeScore: Number(score), sellScore: Number(score) };
+  if (feature === "cutoffBranch") {
+    return { cutoffBranch: Number(score), sellScore: Number(score) };
   }
 
-  if (feature === "foliageScore") {
-    return { foliageScore: Number(score), sellScore: Number(score) };
+  if (feature === "fertilize") {
+    return { fertilize: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "flowerColorUnknown") {
+    return { flowerColorUnknown: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "gatherStats") {
+    return { gatherStats: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "getPhoto") {
+    return { getPhoto: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "ingroundRoots") {
+    return { ingroundRoots: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "leafProblem") {
+    return { leafProblem: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "lichen") {
+    return { lichen: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "lowSoil") {
+    return { lowSoil: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "prune") {
+    return { prune: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "rootsStrength") {
+    return { rootsStrength: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "rust") {
+    return { rust: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "skinnyShape") {
+    return { skinnyShape: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "smallSize") {
+    return { smallSize: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "softBranch") {
+    return { softBranch: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "stringed") {
+    return { stringed: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "sunburnt") {
+    return { sunburnt: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "tipDamage") {
+    return { tipDamage: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "unbalancedShape") {
+    return { unbalancedShape: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "upsize") {
+    return { upsize: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "whiteScale") {
+    return { whiteScale: Number(score), sellScore: Number(score) };
   }
 
   return {};
