@@ -33,6 +33,10 @@ const frangipaniTreeSchema = new mongoose.Schema(
       default: 0,
     },
 
+    rootsScore: Number,
+    shapeScore: Number,
+    foliageScore: Number,
+
     bagSize: {
       type: String,
       required: true,

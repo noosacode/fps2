@@ -3,6 +3,8 @@ const editTag = editParams.get("tag");
 const mode = editParams.get("mode");
 const editForm = document.getElementById("tree-form");
 const editMessage = document.getElementById("message");
+const featureSelect = editForm.elements.feature;
+const featureScoreSelect = editForm.elements.featureScore;
 let isDirty = false;
 const requiredDefaults = {
   position: 0,
@@ -58,7 +60,37 @@ function fillForm(tree) {
     input.value = dateFields.has(name) ? dateValue(value) : value;
   });
   editForm.hidden = false;
+  updateFeatureScore();
   isDirty = false;
+}
+function updateFeatureScore() {
+  if (featureSelect.value === "sellScore") {
+    featureScoreSelect.value = editForm.elements.sellScore.value;
+  } else {
+    featureScoreSelect.value = "";
+  }
+}
+function getFeatureUpdate() {
+  const feature = featureSelect.value;
+  const score = featureScoreSelect.value;
+
+  if (feature === "sellScore") {
+    return { sellScore: Number(score) };
+  }
+
+  if (feature === "rootsScore") {
+    return { rootsScore: Number(score) };
+  }
+
+  if (feature === "shapeScore") {
+    return { shapeScore: Number(score) };
+  }
+
+  if (feature === "foliageScore") {
+    return { foliageScore: Number(score) };
+  }
+
+  return {};
 }
 function searchAnotherTree() {
   if (!isDirty || confirm("Leave this form? Any unsaved changes will be lost."))
@@ -96,6 +128,8 @@ async function loadForm() {
 editForm.addEventListener("input", () => {
   isDirty = true;
 });
+
+featureSelect.addEventListener("change", updateFeatureScore);
 document
   .getElementById("search-button")
   .addEventListener("click", searchAnotherTree);
@@ -108,6 +142,12 @@ window.addEventListener("beforeunload", (event) => {
 editForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   editMessage.textContent = "";
+
+  if (featureSelect.value !== "sellScore" && featureScoreSelect.value === "") {
+    alert("Please enter a feature score.");
+    return;
+  }
+
   const payload = {};
   fieldNames.forEach((name) => {
     if (mode === "update" && name === "dateAdded") return;
@@ -119,6 +159,8 @@ editForm.addEventListener("submit", async (event) => {
         : Number(value)
       : value || undefined;
   });
+
+  Object.assign(payload, getFeatureUpdate());
   try {
     const url =
       mode === "add"
