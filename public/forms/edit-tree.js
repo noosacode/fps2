@@ -79,15 +79,15 @@ function getFeatureUpdate() {
   }
 
   if (feature === "rootsScore") {
-    return { rootsScore: Number(score) };
+    return { rootsScore: Number(score), sellScore: Number(score) };
   }
 
   if (feature === "shapeScore") {
-    return { shapeScore: Number(score) };
+    return { shapeScore: Number(score), sellScore: Number(score) };
   }
 
   if (feature === "foliageScore") {
-    return { foliageScore: Number(score) };
+    return { foliageScore: Number(score), sellScore: Number(score) };
   }
 
   return {};
