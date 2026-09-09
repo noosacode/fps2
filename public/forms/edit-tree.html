@@ -15,7 +15,46 @@
   <form id="tree-form" hidden>
     <label>Tree tag <input id="tag" name="tag" readonly></label>
     <label>Position <input name="position" type="number" step="1"></label>
-    <label>Colour <input name="colour"></label>
+    <label>
+      Colour
+      <select name="colour">
+        <option value="Not recorded yet">Not recorded yet</option>
+        <option value="Aztec Gold">Aztec Gold</option>
+        <option value="Blackjack">Blackjack</option>
+        <option value="Bubblegum Dream">Bubblegum Dream</option>
+        <option value="Buttercup">Buttercup</option>
+        <option value="California Sunset">California Sunset</option>
+        <option value="Candy Rainbow">Candy Rainbow</option>
+        <option value="Caracasana">Caracasana</option>
+        <option value="Cindy Moragne">Cindy Moragne</option>
+        <option value="Coconut Pink">Coconut Pink</option>
+        <option value="Cuba">Cuba</option>
+        <option value="Fiesta">Fiesta</option>
+        <option value="George Brown">George Brown</option>
+        <option value="Hot Pink">Hot Pink</option>
+        <option value="Milkshake">Milkshake</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Petite Pink">Petite Pink</option>
+        <option value="Petite White">Petite White</option>
+        <option value="Pink">Pink</option>
+        <option value="Pink Sunrise">Pink Sunrise</option>
+        <option value="Pudica Pink">Pudica Pink</option>
+        <option value="Pudica White">Pudica White</option>
+        <option value="Razzmic Honey">Razzmic Honey</option>
+        <option value="Red (Red Bull)">Red (Red Bull)</option>
+        <option value="Ruby Gold">Ruby Gold</option>
+        <option value="Sharna's Rose">Sharna's Rose</option>
+        <option value="Singapore">Singapore</option>
+        <option value="Sunset">Sunset</option>
+        <option value="Tricolour">Tricolour</option>
+        <option value="Unknown">Unknown</option>
+        <option value="Venus">Venus</option>
+        <option value="White (cream)">White (cream)</option>
+        <option value="Yellow (Heidi)">Yellow (Heidi)</option>
+        <!-- Add new permanent colours here as needed -->
+        <option value="Other">Other</option>
+      </select>
+    </label>
     <label>
       WooCommerce status
       <select name="wcStatus">
@@ -27,7 +66,6 @@
       </select>
     </label>
     <label>WooCommerce last changed <input name="wcLastChanged" type="date"></label>
-    
     <label>
       Sell Score
       <select name="sellScore" disabled>
@@ -103,7 +141,7 @@
         <option value="200">200</option>
       </select>
     </label>
-    <label>Price <input name="price" type="number" step="0.01"></label>
+    <label>Price <input name="price" type="number" step="10"></label>
     <label>
       Photo quality
       <select name="photoQuality">
