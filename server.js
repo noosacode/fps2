@@ -148,6 +148,27 @@ app.get("/api/trees/turnoff", auth, async (req, res) => {
   }
 });
 
+app.get("/api/summary/colours", auth, async (req, res) => {
+  try {
+    const colours = await FrangipaniTree.aggregate([
+      {
+        $group: {
+          _id: "$colour",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 },
+      },
+    ]);
+
+    res.json(colours);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to load colour summary" });
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
