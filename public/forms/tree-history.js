@@ -31,7 +31,8 @@ form.addEventListener("submit", async (event) => {
 
     if (handleAuthFailure(response)) return;
 
-    const events = await response.json();
+    const data = await response.json();
+    const events = data.events;
 
     if (!response.ok) {
       message.textContent = events.message || "Unable to search history.";
@@ -42,6 +43,10 @@ form.addEventListener("submit", async (event) => {
       message.textContent = "No history found for that tag.";
       return;
     }
+
+    const title = document.createElement("h2");
+    title.textContent = `${tag} - ${data.colour}`;
+    results.appendChild(title);
 
     const table = document.createElement("table");
 

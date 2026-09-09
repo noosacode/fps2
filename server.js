@@ -292,11 +292,18 @@ app.delete("/api/trees/:tag", auth, async (req, res) => {
 });
 
 app.get("/api/events/:tag", auth, async function (req, res) {
+  const tree = await FrangipaniTree.findOne({
+    tag: req.params.tag,
+  });
+
   const events = await Fp2Event.find({
     tag: req.params.tag,
   }).sort({ occurredAt: -1 });
 
-  res.json(events);
+  res.json({
+    colour: tree ? tree.colour : "",
+    events: events,
+  });
 });
 
 app.post("/api/trees", auth, async function (req, res) {
