@@ -90,8 +90,8 @@ function getFeatureUpdate() {
     return { fertilize: Number(score), sellScore: Number(score) };
   }
 
-  if (feature === "flowerColorUnknown") {
-    return { flowerColorUnknown: Number(score), sellScore: Number(score) };
+  if (feature === "flowerColourUnknown") {
+    return { flowerColourUnknown: Number(score), sellScore: Number(score) };
   }
 
   if (feature === "gatherStats") {
