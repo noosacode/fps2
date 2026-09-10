@@ -322,6 +322,18 @@ app.put("/api/trees/:tag", auth, async function (req, res) {
       ),
     );
 
+    if (req.body.clearRecentPhotoDate === true) {
+      updates.recentPhotoDate = null;
+    }
+
+    if (req.body.clearBestPhotoDate === true) {
+      updates.bestPhotoDate = null;
+    }
+
+    if (req.body.clearWcLastChanged === true) {
+      updates.wcLastChanged = null;
+    }
+
     tree.set(updates);
     await tree.validate();
     const changes = changedFields(before, tree.toObject());

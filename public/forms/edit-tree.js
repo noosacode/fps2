@@ -236,6 +236,18 @@ editForm.addEventListener("submit", async (event) => {
       : value || undefined;
   });
 
+  payload.clearRecentPhotoDate = editForm.elements.clearRecentPhotoDate.checked;
+  payload.clearBestPhotoDate = editForm.elements.clearBestPhotoDate.checked;
+  payload.clearWcLastChanged = editForm.elements.clearWcLastChanged.checked;
+
+  if (editForm.elements.deleteNotes.checked) {
+    payload.notes = "No notes";
+  }
+
+  if (editForm.elements.deleteNotesGeneral.checked) {
+    payload.notesGeneral = "No notes";
+  }
+
   Object.assign(payload, getFeatureUpdate());
   try {
     const url =

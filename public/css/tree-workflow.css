@@ -20,15 +20,17 @@ label {
     margin: 12px 0;
 }
 
-input,
-textarea {
+input{
     box-sizing: border-box;
-    width: min(100%, 440px);
+    width: min(100%, 200px);
     padding: 8px;
 }
 
 textarea {
-    min-height: 100px;
+        box-sizing: border-box;
+        width: min(100%, 440px);
+        padding: 8px;
+        min-height: 100px;
 }
 
 button {

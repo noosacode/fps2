@@ -68,7 +68,15 @@ const frangipaniTreeSchema = new mongoose.Schema(
 
     bestPhotoDate: Date,
 
-    recentPhotoDate: Date,
+    recentPhotoDate: {
+      type: Date,
+      set: (value) => {
+        if (value === "No date" || value === 0) {
+          return null;
+        }
+        return value;
+      },
+    },
 
     transportSize: {
       type: String,

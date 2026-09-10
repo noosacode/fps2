@@ -18,7 +18,7 @@
     <label>
       Colour
       <select name="colour">
-        <option value="Not recorded yet">Not recorded yet</option>
+        <option value="Not recorded">Not recorded yet</option>
         <option value="Aztec Gold">Aztec Gold</option>
         <option value="Blackjack">Blackjack</option>
         <option value="Bubblegum Dream">Bubblegum Dream</option>
@@ -65,7 +65,11 @@
         <option value="sold - off">sold - off</option>
       </select>
     </label>
-    <label>WooCommerce last changed <input name="wcLastChanged" type="date"></label>
+    <label>
+      WooCommerce last changed
+      <input type="date" name="wcLastChanged">
+      <input type="checkbox" name="clearWcLastChanged">
+    </label>
     <label>
       Sell Score
       <select name="sellScore" disabled>
@@ -126,7 +130,8 @@
     </label>
     <label>
       Bag size
-      <select name="bagSize">
+      <select name="bagSize">       
+        <option value="0">0</option>
         <option value="250">250</option>
         <option value="300">300</option>
         <option value="350">350</option>
@@ -157,20 +162,28 @@
         <option value="9">9</option>
       </select>
     </label>
-    <label>Best photo date <input name="bestPhotoDate" type="date"></label>
-    <label>Recent photo date <input name="recentPhotoDate" type="date"></label>
+    <label>
+      Best photo date
+      <input type="date" name="bestPhotoDate">
+      <input type="checkbox" name="clearBestPhotoDate">
+    </label>
+    <label>Recent photo date 
+      <input name="recentPhotoDate" type="date">
+      <input type="checkbox" name="clearRecentPhotoDate">
+    </label>
     <label>
       Transport size
       <select name="transportSize">
+        <option value="Not recorded">Not recorded</option>       
         <option value="standard">standard</option>
         <option value="tall">tall</option>
         <option value="oversized">oversized</option>
       </select>
     </label>
-
     <label>
       Relative size
       <select name="relativeSize">
+        <option value="Not recorded">Not recorded</option>
         <option value="XXS">XXS</option>
         <option value="XS">XS</option>
         <option value="MS">MS</option>
@@ -196,8 +209,22 @@
       </select>
     </label>
     <label>Date added <input name="dateAdded" type="date" readonly></label>
-    <label>Notes <textarea name="notes"></textarea></label>
-    <label>General notes <textarea name="notesGeneral"></textarea></label>
+    <label>
+      Notes
+      <textarea name="notes"></textarea>
+    </label>
+    <label>
+      Delete notes
+      <input type="checkbox" name="deleteNotes">
+    </label>
+    <label>
+      General notes
+      <textarea name="notesGeneral"></textarea>
+    </label>
+    <label>
+      Delete general notes
+      <input type="checkbox" name="deleteNotesGeneral">
+    </label>
     <label>
       Outside notes
       <select name="notesOutside">
