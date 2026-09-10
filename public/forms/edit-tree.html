@@ -198,8 +198,58 @@
     <label>Date added <input name="dateAdded" type="date" readonly></label>
     <label>Notes <textarea name="notes"></textarea></label>
     <label>General notes <textarea name="notesGeneral"></textarea></label>
-    <label>Outside notes <textarea name="notesOutside"></textarea></label>
-    <label>Inside notes <textarea name="notesInside"></textarea></label>
+    <label>
+      Outside notes
+      <select name="notesOutside">
+        <option value="">Select an outside task</option>
+        <option value="See notes">See notes</option>
+        <option value="Bag size (get)">Bag size (get)</option>
+        <option value="Colour tag (get)">Colour tag (get)</option>
+        <option value="Crop">Crop</option>
+        <option value="Cut roots">Cut roots</option>
+        <option value="Fertilize">Fertilize</option>
+        <option value="I colour tag (insert)">I colour tag (insert)</option>
+        <option value="I number tag (insert)">I number tag (insert)</option>
+        <option value="Irrigation repair">Irrigation repair</option>
+        <option value="M down (move down)">M down (move down)</option>
+        <option value="M up (move up)">M up (move up)</option>
+        <option value="Number tag (get)">Number tag (get)</option>
+        <option value="Photo">Photo</option>
+        <option value="Popup">Popup</option>
+        <option value="Position (get)">Position (get)</option>
+        <option value="Prune">Prune</option>
+        <option value="Saw">Saw</option>
+        <option value="Sell score (get)">Sell score (get)</option>
+        <option value="Soil level (get)">Soil level (get)</option>
+        <option value="Stats (get)">Stats (get)</option>
+        <option value="String (train with string)">String (train with string)</option>
+        <option value="Transport height (get)">Transport height (get)</option>
+        <option value="Upsize">Upsize</option>
+        <option value="Value (get)">Value (get)</option>
+        <option value="Wash lichen">Wash lichen</option>
+      </select>
+    </label>
+    <label>
+      Inside notes
+      <select name="notesInside">
+        <option value="">Select an inside task</option>
+        <option value="See notes">See notes</option>
+        <option value="Add \" reserved\" to title">Add "reserved" to title</option>
+        <option value="Add sold to title - leave published">Add sold to title - leave published</option>
+        <option value="Add sold to title - turn off / draft">Add sold to title - turn off / draft</option>
+        <option value="Crop">Crop</option>
+        <option value="Get photo ready">Get photo ready</option>
+        <option value="Turn back on">Turn back on</option>
+        <option value="Turn off">Turn off</option>
+        <option value="Turn off 1 month after sale">Turn off 1 month after sale</option>
+        <option value="Turn on">Turn on</option>
+        <option value="Turn on urgently">Turn on urgently</option>
+        <option value="Update photo">Update photo</option>
+        <option value="Update price">Update price</option>
+        <option value="Update something else">Update something else</option>
+        <option value="Watermark">Watermark</option>
+      </select>
+    </label>
     <button type="submit">Save changes</button><button id="search-button" type="button">Search for another tree</button>
   </form>
 

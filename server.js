@@ -222,6 +222,52 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+app.get("/api/trees/cleanup-notes", auth, async (req, res) => {
+  try {
+    const tree = await FrangipaniTree.findOne({
+      $or: [
+        { notesOutside: { $nin: [null, ""] } },
+        { notesInside: { $nin: [null, ""] } },
+      ],
+    }).sort({ position: 1 });
+
+    res.json(tree);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/trees/cleanup-notes/:tag", auth, async (req, res) => {
+  try {
+    const tree = await FrangipaniTree.findOne({ tag: req.params.tag });
+
+    if (!tree) {
+      return res.status(404).json({
+        message: "Tree not found.",
+      });
+    }
+
+    const allowedFields = [
+      "notes",
+      "notesGeneral",
+      "notesOutside",
+      "notesInside",
+    ];
+
+    allowedFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        tree[field] = req.body[field];
+      }
+    });
+
+    await tree.save();
+
+    res.json(tree);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 app.get("/api/trees/:tag", auth, async function (req, res) {
   const tree = await FrangipaniTree.findOne({
     tag: req.params.tag,
