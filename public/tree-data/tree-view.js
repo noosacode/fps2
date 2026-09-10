@@ -21,8 +21,8 @@ const fields = [
   ["Date added", "dateAdded", "date"],
   ["Notes", "notes"],
   ["General notes", "notesGeneral"],
-  ["Outside notes", "notesOutside"],
-  ["Inside notes", "notesInside"],
+  ["Outside tasks", "outsideTasks"],
+  ["Inside tasks", "insideTasks"],
 ];
 function displayValue(value, type) {
   if (value === null || value === undefined || value === "") return "—";

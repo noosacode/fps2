@@ -37,8 +37,8 @@ function loadTree() {
 
       document.getElementById("note").value = tree.notes || "";
       document.getElementById("general-notes").value = tree.notesGeneral || "";
-      document.getElementById("outside-notes").value = tree.notesOutside || "";
-      document.getElementById("inside-notes").value = tree.notesInside || "";
+      document.getElementById("outside-notes").value = tree.outsideTasks || "";
+      document.getElementById("inside-notes").value = tree.insideTasks || "";
 
       document.getElementById("save-button").disabled = false;
     })
@@ -55,8 +55,8 @@ document.getElementById("save-button").addEventListener("click", () => {
   const updates = {
     notes: document.getElementById("note").value,
     notesGeneral: document.getElementById("general-notes").value,
-    notesOutside: document.getElementById("outside-notes").value,
-    notesInside: document.getElementById("inside-notes").value,
+    outsideTasks: document.getElementById("outside-notes").value,
+    insideTasks: document.getElementById("inside-notes").value,
   };
 
   fetch(`/api/trees/cleanup-notes/${encodeURIComponent(currentTree.tag)}`, {

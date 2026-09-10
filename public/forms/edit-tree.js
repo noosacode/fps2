@@ -32,8 +32,8 @@ const fieldNames = [
   "dateAdded",
   "notes",
   "notesGeneral",
-  "notesOutside",
-  "notesInside",
+  "outsideTasks",
+  "insideTasks",
 ];
 const numericFields = new Set([
   "position",

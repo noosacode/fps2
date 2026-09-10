@@ -11,8 +11,8 @@ console.log("min:", minSellScoreInput);
 console.log("max:", maxSellScoreInput);
 const notesContainsInput = document.getElementById("notesContains");
 const notesGeneralNotEmptyInput = document.getElementById("notesGeneralNotEmpty");
-const notesOutsideNotEmptyInput = document.getElementById("notesOutsideNotEmpty");
-const notesInsideNotEmptyInput = document.getElementById("notesInsideNotEmpty");
+const outsideTasksNotEmptyInput = document.getElementById("outsideTasksNotEmpty");
+const insideTasksNotEmptyInput = document.getElementById("insideTasksNotEmpty");
 const message = document.getElementById("message");
 const results = document.getElementById("results");
 const clearBtn = document.getElementById("clearBtn");
@@ -62,8 +62,8 @@ function renderTrees(trees) {
         <th>Sell score</th>
         <th>Notes</th>
         <th>General notes</th>
-        <th>Outside notes</th>
-        <th>Inside notes</th>
+        <th>Outside tasks</th>
+        <th>Inside tasks</th>
       </tr>
     </thead>
     <tbody>
@@ -79,8 +79,8 @@ function renderTrees(trees) {
               <td>${tree.sellScore ?? ""}</td>
               <td>${(tree.notes || "").replace(/</g, "&lt;")}</td>
               <td>${(tree.notesGeneral || "").replace(/</g, "&lt;")}</td>
-              <td>${(tree.notesOutside || "").replace(/</g, "&lt;")}</td>
-              <td>${(tree.notesInside || "").replace(/</g, "&lt;")}</td>
+              <td>${(tree.outsideTasks || "").replace(/</g, "&lt;")}</td>
+              <td>${(tree.insideTasks || "").replace(/</g, "&lt;")}</td>
             </tr>
           `,
         )
@@ -105,8 +105,8 @@ function applyFilters(trees) {
     : null;
   const notesFilter = notesContainsInput.value.trim();
   const notesGeneralNotEmpty = notesGeneralNotEmptyInput.checked;
-  const notesOutsideNotEmpty = notesOutsideNotEmptyInput.checked;
-  const notesInsideNotEmpty = notesInsideNotEmptyInput.checked;
+  const outsideTasksNotEmpty = outsideTasksNotEmptyInput.checked;
+  const insideTasksNotEmpty = insideTasksNotEmptyInput.checked;
 
   return trees.filter((tree) => {
     if (tagFilter && !matchContains(tree.tag, tagFilter)) return false;
@@ -135,8 +135,8 @@ function applyFilters(trees) {
     if (notesFilter && !matchContains(tree.notes, notesFilter)) return false;
 
     if (notesGeneralNotEmpty && !tree.notesGeneral?.trim()) return false;
-    if (notesOutsideNotEmpty && !tree.notesOutside?.trim()) return false;
-    if (notesInsideNotEmpty && !tree.notesInside?.trim()) return false;
+    if (outsideTasksNotEmpty && !tree.outsideTasks?.trim()) return false;
+    if (insideTasksNotEmpty && !tree.insideTasks?.trim()) return false;
 
     return true;
   });
@@ -221,8 +221,8 @@ clearBtn.addEventListener("click", () => {
   minSellScoreInput.value = "";
   notesContainsInput.value = "";
   notesGeneralNotEmptyInput.checked = false;
-  notesOutsideNotEmptyInput.checked = false;
-  notesInsideNotEmptyInput.checked = false;
+  outsideTasksNotEmptyInput.checked = false;
+  insideTasksNotEmptyInput.checked = false;
   message.textContent = "";
   clearResults();
 });

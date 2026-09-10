@@ -35,8 +35,8 @@ const treeFields = [
   "dateAdded",
   "notes",
   "notesGeneral",
-  "notesOutside",
-  "notesInside",
+  "outsideTasks",
+  "insideTasks",
   "bentTrunk",
   "cutoffBranch",
   "fertilize",
@@ -226,8 +226,8 @@ app.get("/api/trees/cleanup-notes", auth, async (req, res) => {
   try {
     const tree = await FrangipaniTree.findOne({
       $or: [
-        { notesOutside: { $nin: [null, ""] } },
-        { notesInside: { $nin: [null, ""] } },
+        { outsideTasks: { $nin: [null, ""] } },
+        { insideTasks: { $nin: [null, ""] } },
       ],
     }).sort({ position: 1 });
 
@@ -250,8 +250,8 @@ app.put("/api/trees/cleanup-notes/:tag", auth, async (req, res) => {
     const allowedFields = [
       "notes",
       "notesGeneral",
-      "notesOutside",
-      "notesInside",
+      "outsideTasks",
+      "insideTasks",
     ];
 
     allowedFields.forEach((field) => {
