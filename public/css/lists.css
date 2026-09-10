@@ -1,0 +1,12 @@
+table {
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 18px 0;
+    white-space: nowrap;
+}
+
+th,
+td {
+    padding: 6px 0;
+    text-align: left;
+}

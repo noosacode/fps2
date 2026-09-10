@@ -1,12 +1,29 @@
 body {
+    max-width: 760px;
+    margin: 32px auto;
+    padding: 0 18px;
     font-family: Arial, sans-serif;
-    margin: 40px;
+    line-height: 1.4;
 }
 
-h1 {
-    color: grey;
+nav {
+    margin-bottom: 28px;
 }
 
-.next-section {
-    margin-top: 60px;
+nav a,
+.actions a {
+    margin-right: 14px;
+}
+
+.message {
+    min-height: 1.5em;
+    color: #9b1c1c;
+}
+
+.actions {
+    margin: 15px 0;
+}
+
+.actions a {
+    margin-right: 20px;
 }

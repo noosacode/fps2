@@ -1,0 +1,53 @@
+label {
+    display: block;
+    margin: 12px 0;
+}
+
+input {
+    box-sizing: border-box;
+    width: min(100%, 200px);
+    padding: 8px;
+}
+
+textarea {
+    box-sizing: border-box;
+    width: min(100%, 440px);
+    padding: 8px;
+    min-height: 100px;
+}
+
+button {
+    padding: 8px 14px;
+    margin: 8px 8px 8px 0;
+    cursor: pointer;
+}
+
+.save-area {
+    margin: 15px 0;
+    text-align: right;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 9px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    width: 38%;
+}
+
+.history-row {
+    cursor: pointer;
+}
+
+.history-details {
+    background-color: #f3f3f3;
+}
