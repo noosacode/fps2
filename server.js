@@ -10,9 +10,11 @@ const bcrypt = require("bcrypt");
 const User = require("./backend/models/User");
 const auth = require("./backend/middleware/auth");
 
-
 const app = express();
 app.use(express.json());
+
+const taskRoutes = require("./backend/routes/tasks");
+app.use("/api/tasks", taskRoutes);
 
 const treeFields = [
   "tag",
