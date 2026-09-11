@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>History Search</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/index.html">Home</a>
+    </nav>
+
+    <h1>History Search</h1>
+
+    <form id="history-search-form" novalidate>
+
+        <label for="from">
+            From
+            <input id="from" name="from" type="date" required>
+        </label>
+
+        <label for="to">
+            To
+            <input id="to" name="to" type="date" required>
+        </label>
+
+        <label for="username">
+            User
+            <select id="username" name="username">
+                <option value="">All users</option>
+                <option value="am">am</option>
+                <option value="dm">dm</option>
+            </select>
+        </label>
+
+        <label for="field">
+            Field
+            <select id="field" name="field">
+                <option value="wcStatus">wcStatus</option>
+                <option value="">Any field</option>
+            </select>
+        </label>
+
+        <label for="new-value">
+            New value
+            <input id="new-value" name="new-value" type="text" value="on" autocomplete="off">
+        </label>
+
+        <button type="submit">Search</button>
+
+    </form>
+
+    <p id="message" class="message" role="alert"></p>
+
+    <div id="history-results"></div>
+
+    <script src="/js/shared-frontend.js"></script>
+    <script src="/forms/history-search.js"></script>
+
+</body>
+
+</html>

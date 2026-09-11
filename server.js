@@ -357,6 +357,109 @@ app.put("/api/trees/:tag", auth, async function (req, res) {
   }
 });
 
+app.get("/api/history-search", auth, async function (req, res) {
+  try {
+    const { from, to, username, field, newValue } = req.query;
+
+    if (!from || !to) {
+      return res.status(400).json({
+        message: "From and To dates are required.",
+      });
+    }
+
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+      return res.status(400).json({
+        message: "Invalid date range.",
+      });
+    }
+
+    const eventFilter = {
+      occurredAt: {
+        $gte: fromDate,
+        $lte: toDate,
+      },
+    };
+
+    if (username) {
+      eventFilter.username = username;
+    }
+
+    if (field || newValue) {
+      const changeFilter = {};
+
+      if (field) {
+        changeFilter.field = field;
+      }
+
+      if (newValue !== undefined && newValue !== "") {
+        changeFilter.newValue = newValue;
+      }
+
+      eventFilter.changes = {
+        $elemMatch: changeFilter,
+      };
+    }
+
+    const events = await Fp2Event.find(eventFilter)
+      .sort({ occurredAt: 1 })
+      .lean();
+
+    const results = [];
+
+    for (const event of events) {
+      const matchingChanges = event.changes.filter((change) => {
+        if (field && change.field !== field) {
+          return false;
+        }
+
+        if (
+          newValue !== undefined &&
+          newValue !== "" &&
+          String(change.newValue) !== String(newValue)
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+
+      if (matchingChanges.length === 0) {
+        continue;
+      }
+
+      const tree = await FrangipaniTree.findOne({
+        tag: event.tag,
+      }).lean();
+
+      for (const change of matchingChanges) {
+        results.push({
+          occurredAt: event.occurredAt,
+          tag: event.tag,
+          username: event.username || "",
+          field: change.field,
+          previousValue: change.previousValue,
+          newValue: change.newValue,
+          colour: tree ? tree.colour : "",
+          bagSize: tree ? tree.bagSize : "",
+          price: tree ? tree.price : "",
+          transportSize: tree ? tree.transportSize : "",
+        });
+      }
+    }
+
+    res.json({ results });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Unable to search history.",
+    });
+  }
+});
+
 app.delete("/api/trees/:tag", auth, async (req, res) => {
   try {
     const tree = await FrangipaniTree.findOneAndDelete({
