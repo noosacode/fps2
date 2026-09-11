@@ -224,10 +224,13 @@ app.get("/", function (req, res) {
 
 app.get("/api/trees/cleanup-notes", auth, async (req, res) => {
   try {
+    const startPosition = Number(req.query.start) || 0;
+
     const tree = await FrangipaniTree.findOne({
+      position: { $gte: startPosition },
       $or: [
-        { outsideTasks: { $nin: [null, ""] } },
-        { insideTasks: { $nin: [null, ""] } },
+        { notes: { $nin: [null, ""] } },
+        { notesGeneral: { $nin: [null, ""] } },
       ],
     }).sort({ position: 1 });
 

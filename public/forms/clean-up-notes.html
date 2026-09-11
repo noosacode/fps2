@@ -13,7 +13,11 @@
 
     <h1>Clean Up Notes</h1>
 
-    <p>This page will be used to clean up Outside tasks and Inside tasks.</p>
+    <div>
+        <label for="start-position">Start from row:</label>
+        <input type="number" id="start-position" value="0">
+        <button id="start-button">Start</button>
+    </div>
 
     <h2>Tree</h2>
 
@@ -21,6 +25,7 @@
     <p>Colour: <span id="tree-colour">---</span></p>
     <p>Bag Size: <span id="tree-bag-size">---</span></p>
     <p>WC Status: <span id="tree-wc-status">---</span></p>
+    <p>Position: <span id="tree-position">---</span></p>
 
     <h2>Notes</h2>
 
@@ -32,19 +37,68 @@
     <label for="general-notes">General Notes</label><br>
     <textarea id="general-notes" rows="4" cols="60"></textarea>
 
-    <br><br>
+<br><br>
 
-    <label for="outside-notes">Outside tasks</label><br>
-    <textarea id="outside-notes" rows="4" cols="60"></textarea>
+<label>
+    Outside tasks
+    <select id="outside-tasks" name="outsideTasks">
+        <option value="">Select an outside task</option>
+        <option value="See notes">See notes</option>
+        <option value="Bag size (get)">Bag size (get)</option>
+        <option value="Colour tag (get)">Colour tag (get)</option>
+        <option value="Crop">Crop</option>
+        <option value="Cut roots">Cut roots</option>
+        <option value="Fertilize">Fertilize</option>
+        <option value="I colour tag (insert)">I colour tag (insert)</option>
+        <option value="I number tag (insert)">I number tag (insert)</option>
+        <option value="Irrigation repair">Irrigation repair</option>
+        <option value="M down (move down)">M down (move down)</option>
+        <option value="M up (move up)">M up (move up)</option>
+        <option value="Number tag (get)">Number tag (get)</option>
+        <option value="Photo">Photo</option>
+        <option value="Popup">Popup</option>
+        <option value="Position (get)">Position (get)</option>
+        <option value="Prune">Prune</option>
+        <option value="Saw">Saw</option>
+        <option value="Sell score (get)">Sell score (get)</option>
+        <option value="Soil level (get)">Soil level (get)</option>
+        <option value="Stats (get)">Stats (get)</option>
+        <option value="String (train with string)">String (train with string)</option>
+        <option value="Transport height (get)">Transport height (get)</option>
+        <option value="Upsize">Upsize</option>
+        <option value="Value (get)">Value (get)</option>
+        <option value="Wash lichen">Wash lichen</option>
+    </select>
+</label>
 
-    <br><br>
+<br><br>
 
-    <label for="inside-notes">Inside tasks</label><br>
-    <textarea id="inside-notes" rows="4" cols="60"></textarea>
+<label>
+    Inside tasks
+    <select id="inside-tasks" name="insideTasks">
+        <option value="">Select an inside task</option>
+        <option value="See notes">See notes</option>
+        <option value="Add &quot; reserved&quot; to title">Add "reserved" to title</option>
+        <option value="Add sold to title - leave published">Add sold to title - leave published</option>
+        <option value="Add sold to title - turn off / draft">Add sold to title - turn off / draft</option>
+        <option value="Crop">Crop</option>
+        <option value="Get photo ready">Get photo ready</option>
+        <option value="Turn back on">Turn back on</option>
+        <option value="Turn off">Turn off</option>
+        <option value="Turn off 1 month after sale">Turn off 1 month after sale</option>
+        <option value="Turn on">Turn on</option>
+        <option value="Turn on urgently">Turn on urgently</option>
+        <option value="Update photo">Update photo</option>
+        <option value="Update price">Update price</option>
+        <option value="Update something else">Update something else</option>
+        <option value="Watermark">Watermark</option>
+    </select>
+</label>
 
-    <br><br>
+<br><br>
 
-    <button id="save-button">Save changes</button>
+    <button id="save-button">Save</button>
+    <button id="next-button">Next</button>
 
     <script src="/forms/clean-up-notes.js"></script>
 

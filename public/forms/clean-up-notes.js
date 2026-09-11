@@ -1,16 +1,16 @@
-console.log("Clean Up Notes page loaded");
-
 let currentTree = null;
 
 function loadTree() {
-  fetch("/api/trees/cleanup-notes", {
+  const params = new URLSearchParams(window.location.search);
+  const startPosition = params.get("start") || 0;
+
+  fetch(`/api/trees/cleanup-notes?start=${startPosition}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   })
     .then((response) => response.json())
     .then((tree) => {
-      console.log("Tree returned:", tree);
 
       currentTree = tree;
 
@@ -22,8 +22,8 @@ function loadTree() {
 
         document.getElementById("note").value = "";
         document.getElementById("general-notes").value = "";
-        document.getElementById("outside-notes").value = "";
-        document.getElementById("inside-notes").value = "";
+        document.getElementById("outside-tasks").value = "";
+        document.getElementById("inside-tasks").value = "";
 
         document.getElementById("save-button").disabled = true;
 
@@ -31,20 +31,33 @@ function loadTree() {
       }
 
       document.getElementById("tree-tag").textContent = tree.tag;
+      document.getElementById("tree-position").textContent = tree.position;
       document.getElementById("tree-colour").textContent = tree.colour;
       document.getElementById("tree-bag-size").textContent = tree.bagSize;
       document.getElementById("tree-wc-status").textContent = tree.wcStatus;
 
       document.getElementById("note").value = tree.notes || "";
       document.getElementById("general-notes").value = tree.notesGeneral || "";
-      document.getElementById("outside-notes").value = tree.outsideTasks || "";
-      document.getElementById("inside-notes").value = tree.insideTasks || "";
+      document.getElementById("outside-tasks").value = tree.outsideTasks || "";
+      document.getElementById("inside-tasks").value = tree.insideTasks || "";
 
       document.getElementById("save-button").disabled = false;
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+
+function goToNextTree() {
+  if (!currentTree) {
+    return;
+  }
+
+  const nextPosition = currentTree.position + 1;
+
+  window.history.replaceState({}, "", `?start=${nextPosition}`);
+
+  loadTree();
 }
 
 document.getElementById("save-button").addEventListener("click", () => {
@@ -55,8 +68,8 @@ document.getElementById("save-button").addEventListener("click", () => {
   const updates = {
     notes: document.getElementById("note").value,
     notesGeneral: document.getElementById("general-notes").value,
-    outsideTasks: document.getElementById("outside-notes").value,
-    insideTasks: document.getElementById("inside-notes").value,
+    outsideTasks: document.getElementById("outside-tasks").value,
+    insideTasks: document.getElementById("inside-tasks").value,
   };
 
   fetch(`/api/trees/cleanup-notes/${encodeURIComponent(currentTree.tag)}`, {
@@ -69,13 +82,24 @@ document.getElementById("save-button").addEventListener("click", () => {
   })
     .then((response) => response.json())
     .then((tree) => {
-      console.log("Tree saved:", tree);
 
-      loadTree();
-    })
-    .catch((error) => {
-      console.error("Save error:", error);
-    });
+  goToNextTree();
+})
+.catch((error) => {
+  console.error("Save error:", error);
+});
 });
 
-loadTree();
+  document.getElementById("next-button").addEventListener("click", () => {
+    goToNextTree();
+  });
+
+  document.getElementById("start-button").addEventListener("click", () => {
+    const startPosition = document.getElementById("start-position").value;
+
+    window.history.replaceState({}, "", `?start=${startPosition}`);
+
+    loadTree();
+  });
+
+  loadTree();
