@@ -57,6 +57,8 @@ async function loadTree() {
     });
     document.getElementById("update-link").href =
       `/forms/edit-tree.html?mode=update&tag=${encodeURIComponent(tree.tag)}`;
+    document.getElementById("update-link2").href =
+      `/forms/tree-history.html?tag=${encodeURIComponent(tree.tag)}`;  
     table.hidden = false;
     actions.hidden = false;
   } catch {

@@ -75,9 +75,12 @@ form.addEventListener("submit", async (event) => {
       const dateCell = document.createElement("td");
       const date = new Date(event.occurredAt);
 
-      dateCell.textContent = date.toLocaleDateString("en-AU", {
+      dateCell.textContent = date.toLocaleString("en-AU", {
+        day: "numeric",
         month: "short",
         year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
       });
 
       const eventCell = document.createElement("td");
@@ -97,7 +100,7 @@ form.addEventListener("submit", async (event) => {
 
       const detailRow = document.createElement("tr");
       detailRow.classList.add("history-details");
-      detailRow.hidden = true;
+      detailRow.hidden = false;
 
       const detailCell = document.createElement("td");
       detailCell.colSpan = 3;
@@ -161,3 +164,11 @@ form.addEventListener("submit", async (event) => {
     message.textContent = "Unable to connect to the server.";
   }
 });
+
+const params = new URLSearchParams(window.location.search);
+const urlTag = params.get("tag");
+
+if (urlTag) {
+  tagInput.value = urlTag;
+  form.requestSubmit();
+}

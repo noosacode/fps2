@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    
+    <nav>
+        <a href="/index.html">Home</a>
+    </nav>
 
     <h1>Clean Up Notes</h1>
 
@@ -19,25 +23,19 @@
         <button id="start-button">Start</button>
     </div>
 
-    <h2>Tree</h2>
+    <p class="tree-summary">Tag: <span id="tree-tag">---</span></p>
+    <p class="tree-summary">Colour: <span id="tree-colour">---</span></p>
+    <p class="tree-summary">Bag Size: <span id="tree-bag-size">---</span></p>
+    <p class="tree-summary">WC Status: <span id="tree-wc-status">---</span></p>
+    <p class="tree-summary">Position: <span id="tree-position">---</span></p>
 
-    <p>Tag: <span id="tree-tag">---</span></p>
-    <p>Colour: <span id="tree-colour">---</span></p>
-    <p>Bag Size: <span id="tree-bag-size">---</span></p>
-    <p>WC Status: <span id="tree-wc-status">---</span></p>
-    <p>Position: <span id="tree-position">---</span></p>
-
-    <h2>Notes</h2>
-
-    <label for="note">Note</label><br>
+    <label for="note">Note</label>
     <textarea id="note" rows="4" cols="60"></textarea>
 
-    <br><br>
+    <br>
 
-    <label for="general-notes">General Notes</label><br>
+    <label for="general-notes">General Notes</label>
     <textarea id="general-notes" rows="4" cols="60"></textarea>
-
-<br><br>
 
 <label>
     Outside tasks
@@ -71,8 +69,6 @@
     </select>
 </label>
 
-<br><br>
-
 <label>
     Inside tasks
     <select id="inside-tasks" name="insideTasks">
@@ -94,8 +90,6 @@
         <option value="Watermark">Watermark</option>
     </select>
 </label>
-
-<br><br>
 
     <button id="save-button">Save</button>
     <button id="next-button">Next</button>

@@ -51,3 +51,8 @@ th {
 .history-details {
     background-color: #f3f3f3;
 }
+
+.tree-summary {
+    display: inline;
+    margin-right: 20px;
+}
