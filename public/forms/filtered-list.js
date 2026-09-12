@@ -189,14 +189,17 @@ form.addEventListener("submit", async (event) => {
       return;
     }
 
+    const filtered = applyFilters(trees);
+
+    // Show counts BEFORE any returns
+    message.textContent = `Displaying ${filtered.length} of ${trees.length} trees`;
+
     // Safety limit to avoid rendering too many rows in the browser
-    const MAX_ROWS = 100;
-    if (trees.length > MAX_ROWS) {
-      message.textContent = `Search returned ${trees.length} trees — narrow the position range or add filters. (Limit ${MAX_ROWS})`;
+    const MAX_ROWS = 20;
+    if (filtered.length > MAX_ROWS) {
+      message.textContent = `Search returned ${filtered.length} trees — narrow the position range or add filters. (Limit ${MAX_ROWS})`;
       return;
     }
-
-    const filtered = applyFilters(trees);
 
     if (filtered.length === 0) {
       message.textContent =
