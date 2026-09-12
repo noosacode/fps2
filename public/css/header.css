@@ -1,0 +1,26 @@
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left .logo {
+    color: grey;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.nav-right a {
+    color: grey;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+.app-header {
+    padding: 10px 20px 20px;
+}

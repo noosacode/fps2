@@ -3,128 +3,70 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/home-obs.css">
+    <link rel="stylesheet" href="/css/header.css">
 </head>
 
+<header class="app-header">
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <span class="logo">Frangipani Trees</span>
+        </div>
+
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="forms/find-tree.html">Find-a-tree</a>
+            <a href="forms/positions.html">Tree Positions</a>
+            <a href="forms/tree-history.html">Tree History</a>
+            <a href="lists/outside-tasks.html">Outside Tasks</a>
+            <a href="lists/inside-tasks.html">Inside Tasks</a>
+            <a href="lists/lists.html">Lists</a>
+            <a href="lists/more.html">More</a>
+        </div>
+    </nav>
+</header>
+
+
 <body>
-
-<h1>Frangipani Trees</h1>
-
-<!-- Login Form -->
-<div id="login-box">
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button id="login-btn">Login</button>
-    <button id="logout-btn" style="display: none;">Logout</button>
-</div>
-
-<div class="home-grid">
-
-    <a href="/forms/find-tree.html" class="home-card">
-        <h2>Find a Tree</h2>
-    </a>
-
-    <a href="/forms/positions.html" class="home-card">
-        <h2>Check Tree Positions</h2>
-    </a>
-
-    <a href="/forms/tree-history.html" class="home-card">
-        <h2>Check a Tree's History</h2>
-    </a>
-
-</div>
-<div class="home-grid">
-
-    <a href="/lists/outside-tasks.html" class="home-card">
-        <h2>Outside Tasks</h2>
-    </a>
+    <!-- Login Form -->
+    <div id="login-box">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login-btn">Login</button>
+        <button id="logout-btn" style="display: none;">Logout</button>
+    </div>
     
-    <a href="/lists/inside-tasks.html" class="home-card">
-        <h2>Inside Tasks</h2>
-    </a>      
-
-</div>
-<div class="home-grid">
-
-    <a href="/lists/turnon.html" class="home-card">
-        <h2>List of Trees to Turn On</h2>
-    </a>
-
-    <a href="/lists/turnoff.html" class="home-card">
-        <h2>List of Trees to Turn Off</h2>
-    </a>
-
-    <a href="/lists/summary.html" class="home-card">
-        <h2>Flower Colour Summary</h2>
-    </a>
-
-</div>
-
-<div class="home-grid">
+    <div class="home-grid">
     
-    <a href="/forms/filtered-list.html" class="home-card">
-        <h2>Filtered Search</h2>
-    </a>
+        <a href="/forms/find-tree.html" class="home-card">
+            <h2>Find a Tree</h2>
+        </a>
     
-    <a href="/forms/history-search.html" class="home-card">
-        <h2>History Search</h2>
-    </a>
-
-</div>
+        <a href="/forms/positions.html" class="home-card">
+            <h2>Check Tree Positions</h2>
+        </a>
     
-<div class="home-grid">
-    <a href="/forms/clean-up-notes.html" class="home-card">
-        <h2>Clean Up Notes</h2>
-    </a>
+        <a href="/forms/tree-history.html" class="home-card">
+            <h2>Check a Tree's History</h2>
+        </a>
     
-    <a href="/forms/delete-tree.html" class="home-card">
-        <h2>Delete Tree</h2>
-    </a>
+    </div>
+    <div class="home-grid">
     
-    <!-- Stage 1 links -->
+        <a href="/lists/outside-tasks.html" class="home-card">
+            <h2>Outside Tasks</h2>
+        </a>
     
-    <a href="/forms/tree.html" class="home-card">
-        <h2>OldSearch Form</h2>
-    </a>
-        
-</div>
+        <a href="/lists/inside-tasks.html" class="home-card">
+            <h2>Inside Tasks</h2>
+        </a>
+    
+    </div>
 
-
-<!-- Stage 2 links -->
- <div>
-    <a href="/forms/find-tree.html">Find a Tree</a>
- </div>
-
-<div class="next-section">
-    <a href="/forms/positions.html">Check Tree Positions</a><br>
-</div>
-
-<div class="next-section">
-    <a href="/forms/tree-history.html">Check a Tree's History</a>
-</div>
-
-<div class="next-section">
-    <a href="/forms/turnon.html">List of Trees to Turn On</a>
-</div>
-
-<div class="next-section">
-    <a href="/forms/filtered-list.html">Filtered Search</a>
-</div>
-
-<div class="next-section">
-    <a href="/forms/delete-tree.html">Delete Tree</a>
-</div>
-
-
-<!-- Stage 1 links -->
-<div class="next-section">
-    <a href="/forms/tree.html">OldSearch Form</a>
-</div>
-
-<script src="js/login.js"></script>
-<script src="js/logout.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/logout.js"></script>
 
 </body>
 

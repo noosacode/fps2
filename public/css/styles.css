@@ -6,10 +6,6 @@ body {
     line-height: 1.4;
 }
 
-nav {
-    margin-bottom: 28px;
-}
-
 nav a,
 .actions a {
     margin-right: 14px;
@@ -27,3 +23,5 @@ nav a,
 .actions a {
     margin-right: 20px;
 }
+
+
