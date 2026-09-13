@@ -13,24 +13,28 @@ form.addEventListener("submit", async (event) => {
     return;
   }
   
-  try {
-    const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
-      headers: { Authorization: localStorage.getItem("token") },
-    });
+  await withLoading(async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-    if (handleAuthFailure(response)) return;
-    
-    if (response.ok) {
-      window.location.href = `/tree-data/tree-view.html?tag=${encodeURIComponent(tag)}`;
-      return;
+      const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+
+      if (handleAuthFailure(response)) return;
+
+      if (response.ok) {
+        window.location.href = `/tree-data/tree-view.html?tag=${encodeURIComponent(tag)}`;
+        return;
+      }
+      if (response.status === 404) {
+        window.location.href = `/forms/add-tree.html?tag=${encodeURIComponent(tag)}`;
+        return;
+      }
+      const data = await response.json().catch(() => ({}));
+      message.textContent = data.message || "Unable to search for that tree.";
+    } catch {
+      message.textContent = "Unable to connect to the server.";
     }
-    if (response.status === 404) {
-      window.location.href = `/forms/add-tree.html?tag=${encodeURIComponent(tag)}`;
-      return;
-    }
-    const data = await response.json().catch(() => ({}));
-    message.textContent = data.message || "Unable to search for that tree.";
-  } catch {
-    message.textContent = "Unable to connect to the server.";
-  }
+  });
 });

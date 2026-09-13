@@ -3,6 +3,7 @@ const viewTag = viewParams.get("tag");
 const viewMessage = document.getElementById("message");
 const table = document.getElementById("tree-data");
 const actions = document.getElementById("actions");
+
 const fields = [
   ["Tag", "tag"],
   ["Position", "position"],
@@ -33,36 +34,41 @@ async function loadTree() {
     viewMessage.textContent = "No tree tag was supplied.";
     return;
   }
-  try {
-    const response = await fetch(`/api/trees/${encodeURIComponent(viewTag)}`, {
-      headers: { Authorization: localStorage.getItem("token") },
-    });
+  await withLoading(async () => {
+    try {
+      const response = await fetch(
+        `/api/trees/${encodeURIComponent(viewTag)}`,
+        {
+          headers: { Authorization: localStorage.getItem("token") },
+        },
+      );
 
-    if (handleAuthFailure(response)) return;
-    
-    const tree = await response.json();
-    if (!response.ok) {
-      viewMessage.textContent = tree.message || "Unable to load this tree.";
-      return;
+      if (handleAuthFailure(response)) return;
+
+      const tree = await response.json();
+      if (!response.ok) {
+        viewMessage.textContent = tree.message || "Unable to load this tree.";
+        return;
+      }
+      const body = table.querySelector("tbody");
+      fields.forEach(([label, key, type]) => {
+        const row = document.createElement("tr");
+        const heading = document.createElement("th");
+        const value = document.createElement("td");
+        heading.textContent = label;
+        value.textContent = displayValue(tree[key], type);
+        row.append(heading, value);
+        body.appendChild(row);
+      });
+      document.getElementById("update-link").href =
+        `/forms/edit-tree.html?mode=update&tag=${encodeURIComponent(tree.tag)}`;
+      document.getElementById("update-link2").href =
+        `/forms/tree-history.html?tag=${encodeURIComponent(tree.tag)}`;
+      table.hidden = false;
+      actions.hidden = false;
+    } catch {
+      viewMessage.textContent = "Unable to connect to the server.";
     }
-    const body = table.querySelector("tbody");
-    fields.forEach(([label, key, type]) => {
-      const row = document.createElement("tr");
-      const heading = document.createElement("th");
-      const value = document.createElement("td");
-      heading.textContent = label;
-      value.textContent = displayValue(tree[key], type);
-      row.append(heading, value);
-      body.appendChild(row);
-    });
-    document.getElementById("update-link").href =
-      `/forms/edit-tree.html?mode=update&tag=${encodeURIComponent(tree.tag)}`;
-    document.getElementById("update-link2").href =
-      `/forms/tree-history.html?tag=${encodeURIComponent(tree.tag)}`;  
-    table.hidden = false;
-    actions.hidden = false;
-  } catch {
-    viewMessage.textContent = "Unable to connect to the server.";
-  }
+  });
 }
 loadTree();

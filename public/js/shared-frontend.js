@@ -15,3 +15,14 @@ function handleAuthFailure(response) {
 
   return false;
 }
+
+// Loading message - Add one line to each html file and one line each js file plus closing bracket.
+async function withLoading(task) {
+  const loading = document.getElementById("loading");
+  loading.style.display = "block";
+  try {
+    await task();
+  } finally {
+    loading.style.display = "none";
+  }
+}
