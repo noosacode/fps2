@@ -49,36 +49,38 @@ function sortTrees(column) {
 }
 
 async function loadTrees() {
-  if (!taskName) {
-    message.textContent = "No task specified.";
-    return;
-  }
-
-  pageTitle.textContent = taskName;
-
-  try {
-    const response = await fetch(
-      `/api/tasks/outside/${encodeURIComponent(taskName)}`,
-      { headers: { Authorization: localStorage.getItem("token") } },
-    );
-
-    const trees = await response.json();
-
-    if (!response.ok) {
-      message.textContent = trees.message || "Unable to load trees.";
+  await withLoading(async () => {
+    if (!taskName) {
+      message.textContent = "No task specified.";
       return;
     }
 
-    if (trees.length === 0) {
-      message.textContent = "No trees found for this task.";
-      return;
-    }
+    pageTitle.textContent = taskName;
 
-    currentTrees = trees;
-    renderTable(currentTrees);
-  } catch {
-    message.textContent = "Unable to connect to the server.";
-  }
+    try {
+      const response = await fetch(
+        `/api/tasks/outside/${encodeURIComponent(taskName)}`,
+        { headers: { Authorization: localStorage.getItem("token") } },
+      );
+
+      const trees = await response.json();
+
+      if (!response.ok) {
+        message.textContent = trees.message || "Unable to load trees.";
+        return;
+      }
+
+      if (trees.length === 0) {
+        message.textContent = "No trees found for this task.";
+        return;
+      }
+
+      currentTrees = trees;
+      renderTable(currentTrees);
+    } catch {
+      message.textContent = "Unable to connect to the server.";
+    }
+  });
 }
 
 document.querySelectorAll("#tree-table th").forEach((header, index) => {

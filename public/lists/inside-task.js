@@ -56,29 +56,31 @@ async function loadTrees() {
 
   pageTitle.textContent = taskName;
 
-  try {
-    const response = await fetch(
-      `/api/tasks/inside/${encodeURIComponent(taskName)}`,
-      { headers: { Authorization: localStorage.getItem("token") } },
-    );
+  await withLoading(async () => {
+    try {
+      const response = await fetch(
+        `/api/tasks/inside/${encodeURIComponent(taskName)}`,
+        { headers: { Authorization: localStorage.getItem("token") } },
+      );
 
-    const trees = await response.json();
+      const trees = await response.json();
 
-    if (!response.ok) {
-      message.textContent = trees.message || "Unable to load trees.";
-      return;
+      if (!response.ok) {
+        message.textContent = trees.message || "Unable to load trees.";
+        return;
+      }
+
+      if (trees.length === 0) {
+        message.textContent = "No trees found for this task.";
+        return;
+      }
+
+      currentTrees = trees;
+      renderTable(currentTrees);
+    } catch {
+      message.textContent = "Unable to connect to the server.";
     }
-
-    if (trees.length === 0) {
-      message.textContent = "No trees found for this task.";
-      return;
-    }
-
-    currentTrees = trees;
-    renderTable(currentTrees);
-  } catch {
-    message.textContent = "Unable to connect to the server.";
-  }
+  });
 }
 
 document.querySelectorAll("#tree-table th").forEach((header, index) => {

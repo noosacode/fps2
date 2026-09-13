@@ -184,22 +184,27 @@ async function loadForm() {
     fillForm({ tag: editTag, dateAdded: new Date() });
     return;
   }
-  try {
-    const response = await fetch(`/api/trees/${encodeURIComponent(editTag)}`, {
-      headers: { Authorization: localStorage.getItem("token") },
-    });
+  await withLoading(async () => {
+    try {
+      const response = await fetch(
+        `/api/trees/${encodeURIComponent(editTag)}`,
+        {
+          headers: { Authorization: localStorage.getItem("token") },
+        },
+      );
 
-    // if (handleAuthFailure(response)) return;
+      // if (handleAuthFailure(response)) return;
 
-    const tree = await response.json();
-    if (!response.ok) {
-      editMessage.textContent = tree.message || "Unable to load this tree.";
-      return;
+      const tree = await response.json();
+      if (!response.ok) {
+        editMessage.textContent = tree.message || "Unable to load this tree.";
+        return;
+      }
+      fillForm(tree);
+    } catch {
+      editMessage.textContent = "Unable to connect to the server.";
     }
-    fillForm(tree);
-  } catch {
-    editMessage.textContent = "Unable to connect to the server.";
-  }
+  });
 }
 editForm.addEventListener("input", () => {
   isDirty = true;
@@ -249,30 +254,32 @@ editForm.addEventListener("submit", async (event) => {
   }
 
   Object.assign(payload, getFeatureUpdate());
-  try {
-    const url =
-      mode === "add"
-        ? "/api/trees"
-        : `/api/trees/${encodeURIComponent(editTag)}`;
-    const response = await fetch(url, {
-      method: mode === "add" ? "POST" : "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(
-        mode === "add" ? { ...payload, tag: editTag } : payload,
-      ),
-    });
-    const tree = await response.json();
-    if (!response.ok) {
-      editMessage.textContent = tree.message || "Unable to save this tree.";
-      return;
+  await withLoading(async () => {
+    try {
+      const url =
+        mode === "add"
+          ? "/api/trees"
+          : `/api/trees/${encodeURIComponent(editTag)}`;
+      const response = await fetch(url, {
+        method: mode === "add" ? "POST" : "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(
+          mode === "add" ? { ...payload, tag: editTag } : payload,
+        ),
+      });
+      const tree = await response.json();
+      if (!response.ok) {
+        editMessage.textContent = tree.message || "Unable to save this tree.";
+        return;
+      }
+      isDirty = false;
+      window.location.href = `/tree-data/tree-view.html?tag=${encodeURIComponent(tree.tag)}`;
+    } catch {
+      editMessage.textContent = "Unable to connect to the server.";
     }
-    isDirty = false;
-    window.location.href = `/tree-data/tree-view.html?tag=${encodeURIComponent(tree.tag)}`;
-  } catch {
-    editMessage.textContent = "Unable to connect to the server.";
-  }
+  });
 });
 loadForm();

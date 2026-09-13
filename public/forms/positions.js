@@ -34,23 +34,24 @@ findButton.addEventListener("click", async () => {
     return;
   }
 
-  const token = localStorage.getItem("token");
-  const response = await fetch(`/api/trees/positions/${start}/${end}`, {
-    headers: {
-      Authorization: token,
-    },
-  });
+  await withLoading(async () => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/trees/positions/${start}/${end}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
 
-  const trees = await response.json();
+    const trees = await response.json();
 
-  const treeMap = new Map(trees.map((t) => [t.position, t]));
+    const treeMap = new Map(trees.map((t) => [t.position, t]));
 
-  const rows = [];
-  for (let pos = start; pos <= end; pos++) {
-    const tree = treeMap.get(pos);
-    rows.push(
-      tree
-        ? `
+    const rows = [];
+    for (let pos = start; pos <= end; pos++) {
+      const tree = treeMap.get(pos);
+      rows.push(
+        tree
+          ? `
             <tr>
                 <td>${tree.position}</td>
                 <td>${tree.tag}</td>
@@ -58,7 +59,7 @@ findButton.addEventListener("click", async () => {
                 <td>${tree.bagSize}</td>
                 <td><input type="checkbox" data-tag="${tree.tag}" data-position="${tree.position}"></td>
             </tr>`
-        : `
+          : `
             <tr>
                 <td>${pos}</td>
                 <td></td>
@@ -66,10 +67,10 @@ findButton.addEventListener("click", async () => {
                 <td></td>
                 <td></td>
             </tr>`,
-    );
-  }
+      );
+    }
 
-  results.innerHTML = `
+    results.innerHTML = `
   <div class="save-area">
     <button id="saveButton">Submit</button>
   </div>
@@ -86,41 +87,46 @@ findButton.addEventListener("click", async () => {
     </table>
 `;
 
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      const tag = this.dataset.tag;
-      const position = Number(this.dataset.position);
-      const newPosition = position < 50000 ? position + 70000 : position;
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        const tag = this.dataset.tag;
+        const position = Number(this.dataset.position);
+        const newPosition = position < 50000 ? position + 70000 : position;
+      });
     });
   });
 
   const saveButton = document.getElementById("saveButton");
   saveButton.addEventListener("click", async function () {
-    const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-    if (checked.length === 0) {
-      alert("Please select at least one tree.");
-      return;
-    }
-    for (const checkbox of checked) {
-      const tag = checkbox.dataset.tag;
-      const position = Number(checkbox.dataset.position);
-      const newPosition = position < 50000 ? position + 70000 : position;
-      const response = await fetch(`/api/trees/${tag}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          position: newPosition,
-        }),
-      });
+    await withLoading(async () => {
+      const checked = document.querySelectorAll(
+        'input[type="checkbox"]:checked',
+      );
+      if (checked.length === 0) {
+        alert("Please select at least one tree.");
+        return;
+      }
+      for (const checkbox of checked) {
+        const tag = checkbox.dataset.tag;
+        const position = Number(checkbox.dataset.position);
+        const newPosition = position < 50000 ? position + 70000 : position;
+        const response = await fetch(`/api/trees/${tag}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            position: newPosition,
+          }),
+        });
 
-      if (handleAuthFailure(response)) return;
+        if (handleAuthFailure(response)) return;
 
-      const savedTree = await response.json();
-    }
-    findButton.click();
+        const savedTree = await response.json();
+      }
+      findButton.click();
+    });
   });
 });
