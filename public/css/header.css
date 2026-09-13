@@ -4,13 +4,13 @@
     align-items: center;
 }
 
-.nav-left .logo {
+.nav-right .logo {
     color: grey;
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-.nav-right a {
+.nav-left a {
     color: grey;
     margin-left: 20px;
     text-decoration: none;

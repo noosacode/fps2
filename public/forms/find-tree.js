@@ -12,6 +12,7 @@ form.addEventListener("submit", async (event) => {
       "Enter a three-digit tag (100-999) or digits followed by letters, such as 12w.";
     return;
   }
+  
   try {
     const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
       headers: { Authorization: localStorage.getItem("token") },

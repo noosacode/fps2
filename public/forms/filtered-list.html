@@ -5,16 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Filtered List</title>
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 
-<body>
-    <nav>
-        <a href="/index.html">Home</a>
-    </nav>
+<header class="app-header">
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <a href="/index.html">Home</a>
+            <a href="/tree-data/tools.html">Tools</a>
+            <a href="/lists/lists.html">Lists</a>
+            <a href="/lists/menu.html">Menu</a>
+        </div>
 
-    <h1>Filtered list</h1>
+        <div class="nav-right">
+            <span class="logo">Frangipani Trees</span>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <h1>Filtered Search</h1>
 
     <!-- Filtering fields follow the same pattern as other forms -->
     <form id="filtered-list-form" novalidate>

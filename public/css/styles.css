@@ -6,11 +6,6 @@ body {
     line-height: 1.4;
 }
 
-nav a,
-.actions a {
-    margin-right: 14px;
-}
-
 .message {
     min-height: 1.5em;
     color: #9b1c1c;
