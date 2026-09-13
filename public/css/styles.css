@@ -19,4 +19,8 @@ body {
     margin-right: 20px;
 }
 
-
+#loading {
+    display: none;
+    font-weight: bold;
+    color: orange;
+}
