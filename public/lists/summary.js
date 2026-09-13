@@ -1,23 +1,24 @@
 async function loadColourSummary() {
-  const response = await fetch("/api/summary/colours", {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
+  await withLoading(async () => {
+    const response = await fetch("/api/summary/colours", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
 
-  if (handleAuthFailure(response)) return;
+    if (handleAuthFailure(response)) return;
 
-  const colours = await response.json();
+    const colours = await response.json();
 
-  const container = document.getElementById("colourSummary");
+    const container = document.getElementById("colourSummary");
 
-  let total = 0;
+    let total = 0;
 
-  colours.forEach((item) => {
-    total += item.count;
-  });
+    colours.forEach((item) => {
+      total += item.count;
+    });
 
-  let html = `
+    let html = `
   <table>
     <thead>
       <tr>
@@ -28,16 +29,16 @@ async function loadColourSummary() {
     <tbody>
 `;
 
-  colours.forEach((item) => {
-    html += `
+    colours.forEach((item) => {
+      html += `
     <tr>
       <td>${item._id}</td>
       <td>${item.count}</td>
     </tr>
   `;
-  });
+    });
 
-  html += `
+    html += `
     </tbody>
     <tfoot>
       <tr>
@@ -48,7 +49,8 @@ async function loadColourSummary() {
   </table>
 `;
 
-  container.innerHTML = html;
+    container.innerHTML = html;
+  });
 }
 
 loadColourSummary();

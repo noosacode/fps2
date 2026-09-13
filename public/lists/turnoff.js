@@ -1,27 +1,28 @@
 const results = document.getElementById("results");
 
 async function loadTurnOffList() {
-  const response = await fetch("/api/trees/turnoff", {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
+  await withLoading(async () => {
+    const response = await fetch("/api/trees/turnoff", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
 
-  if (handleAuthFailure(response)) return;
+    if (handleAuthFailure(response)) return;
 
-  const trees = await response.json();
+    const trees = await response.json();
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    results.innerHTML = `
+    if (!response.ok) {
+      const errorText = await response.text();
+      results.innerHTML = `
     <p>Unable to load Turn Off list.</p>
     <p>Status: ${response.status}</p>
     <p>${errorText}</p>
   `;
-    return;
-  }
+      return;
+    }
 
-  results.innerHTML = `
+    results.innerHTML = `
     <h2>Trees to Turn Off</h2>
 
     <table>
@@ -50,6 +51,7 @@ async function loadTurnOffList() {
         .join("")}
     </table>
   `;
+  });
 }
 
 loadTurnOffList();

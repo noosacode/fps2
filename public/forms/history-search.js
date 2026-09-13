@@ -106,6 +106,7 @@ const to = localDateToISO(toInput.value, true);
   }
 
   try {
+    await withLoading(async () => {
     const response = await fetch(`/api/history-search?${params.toString()}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
@@ -195,6 +196,7 @@ const to = localDateToISO(toInput.value, true);
 
     table.append(thead, tbody);
     results.appendChild(table);
+  });
   } catch (error) {
     console.error(error);
     message.textContent = "Unable to connect to the server.";

@@ -16,17 +16,18 @@ form.addEventListener("submit", async (event) => {
   }
 
   try {
-    const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
-      headers: { Authorization: localStorage.getItem("token") },
-    });
+    await withLoading(async () => {
+      const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
 
-    if (handleAuthFailure(response)) return;
+      if (handleAuthFailure(response)) return;
 
-    if (response.ok) {
-      const tree = await response.json();
-      const treeDetails = document.getElementById("tree-details");
+      if (response.ok) {
+        const tree = await response.json();
+        const treeDetails = document.getElementById("tree-details");
 
-      treeDetails.innerHTML = `
+        treeDetails.innerHTML = `
         <h2>Tree Details</h2>
         <p>Tag: ${tree.tag}</p>
         <p>Colour: ${tree.colour}</p>
@@ -35,50 +36,54 @@ form.addEventListener("submit", async (event) => {
         <button id="delete-button" type="button">Delete This Tree</button>
       `;
 
-      const deleteButton = document.getElementById("delete-button");
+        const deleteButton = document.getElementById("delete-button");
 
-      deleteButton.addEventListener("click", async () => {
-        if (!confirm(`Delete tree ${tree.tag}?`)) {
-          return;
-        }
-
-        try {
-          const deleteResponse = await fetch(
-            `/api/trees/${encodeURIComponent(tree.tag)}`,
-            {
-              method: "DELETE",
-              headers: {
-                Authorization: localStorage.getItem("token"),
-              },
-            },
-          );
-
-          const data = await deleteResponse.json().catch(() => ({}));
-
-          if (deleteResponse.ok) {
-            treeDetails.innerHTML = "";
-            message.textContent = "Tree deleted.";
-            tagInput.value = "";
-            tagInput.focus();
+        deleteButton.addEventListener("click", async () => {
+          if (!confirm(`Delete tree ${tree.tag}?`)) {
             return;
           }
 
-          message.textContent = data.message || "Unable to delete the tree.";
-        } catch {
-          message.textContent = "Unable to connect to the server.";
-        }
-      });
+          try {
+            await withLoading(async () => {
+              const deleteResponse = await fetch(
+                `/api/trees/${encodeURIComponent(tree.tag)}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: localStorage.getItem("token"),
+                  },
+                },
+              );
 
-      return;
-    }
+              const data = await deleteResponse.json().catch(() => ({}));
 
-    if (response.status === 404) {
-      message.textContent = "Tree not found.";
-      return;
-    }
+              if (deleteResponse.ok) {
+                treeDetails.innerHTML = "";
+                message.textContent = "Tree deleted.";
+                tagInput.value = "";
+                tagInput.focus();
+                return;
+              }
 
-    const data = await response.json().catch(() => ({}));
-    message.textContent = data.message || "Unable to search for that tree.";
+              message.textContent =
+                data.message || "Unable to delete the tree.";
+            });
+          } catch {
+            message.textContent = "Unable to connect to the server.";
+          }
+        });
+
+        return;
+      }
+
+      if (response.status === 404) {
+        message.textContent = "Tree not found.";
+        return;
+      }
+
+      const data = await response.json().catch(() => ({}));
+      message.textContent = data.message || "Unable to search for that tree.";
+    });
   } catch {
     message.textContent = "Unable to connect to the server.";
   }

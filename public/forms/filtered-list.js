@@ -169,45 +169,47 @@ form.addEventListener("submit", async (event) => {
   }
 
   try {
-    const response = await fetch(`/api/trees/positions/${start}/${end}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
+    await withLoading(async () => {
+      const response = await fetch(`/api/trees/positions/${start}/${end}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      if (handleAuthFailure(response)) return;
+
+      const trees = await response.json();
+
+      if (!response.ok) {
+        message.textContent = trees.message || "Unable to fetch trees.";
+        return;
+      }
+
+      if (trees.length === 0) {
+        message.textContent = `No trees found between positions ${start} and ${end}.`;
+        return;
+      }
+
+      const filtered = applyFilters(trees);
+
+      // Show counts BEFORE any returns
+      message.textContent = `Displaying ${filtered.length} of ${trees.length} trees`;
+
+      // Safety limit to avoid rendering too many rows in the browser
+      const MAX_ROWS = 20;
+      if (filtered.length > MAX_ROWS) {
+        message.textContent = `Search returned ${filtered.length} trees — narrow the position range or add filters. (Limit ${MAX_ROWS})`;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        message.textContent =
+          "No trees matched the filters within the requested positions.";
+        return;
+      }
+
+      renderTrees(filtered);
     });
-
-    if (handleAuthFailure(response)) return;
-
-    const trees = await response.json();
-
-    if (!response.ok) {
-      message.textContent = trees.message || "Unable to fetch trees.";
-      return;
-    }
-
-    if (trees.length === 0) {
-      message.textContent = `No trees found between positions ${start} and ${end}.`;
-      return;
-    }
-
-    const filtered = applyFilters(trees);
-
-    // Show counts BEFORE any returns
-    message.textContent = `Displaying ${filtered.length} of ${trees.length} trees`;
-
-    // Safety limit to avoid rendering too many rows in the browser
-    const MAX_ROWS = 20;
-    if (filtered.length > MAX_ROWS) {
-      message.textContent = `Search returned ${filtered.length} trees — narrow the position range or add filters. (Limit ${MAX_ROWS})`;
-      return;
-    }
-
-    if (filtered.length === 0) {
-      message.textContent =
-        "No trees matched the filters within the requested positions.";
-      return;
-    }
-
-    renderTrees(filtered);
   } catch (err) {
     console.error(err);
     message.textContent = "Unable to connect to the server.";
