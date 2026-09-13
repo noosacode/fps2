@@ -16,7 +16,7 @@ function handleAuthFailure(response) {
   return false;
 }
 
-// Loading message - Add one line to each html file and one line each js file plus closing bracket.
+// Loading message - See ms notes doc.
 async function withLoading(task) {
   const loading = document.getElementById("loading");
   loading.style.display = "block";
