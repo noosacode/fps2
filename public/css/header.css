@@ -21,6 +21,13 @@
     text-decoration: underline;
 }
 
+.nav-active {
+    font-weight: bold;
+    color: purple !important;
+    pointer-events: none;
+    cursor: default;
+}
+
 .app-header {
     padding: 10px 20px 20px;
 }
