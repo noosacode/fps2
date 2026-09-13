@@ -94,12 +94,20 @@ function getFeatureUpdate() {
     return { flowerColourUnknown: Number(score), sellScore: Number(score) };
   }
 
+  if (feature === "fruitSpottingBug") {
+    return { fruitSpottingBug: Number(score), sellScore: Number(score) };
+  }
+  
   if (feature === "gatherStats") {
     return { gatherStats: Number(score), sellScore: Number(score) };
   }
 
   if (feature === "getPhoto") {
     return { getPhoto: Number(score), sellScore: Number(score) };
+  }
+
+  if (feature === "health") {
+    return { health: Number(score), sellScore: Number(score) };
   }
 
   if (feature === "ingroundRoots") {
