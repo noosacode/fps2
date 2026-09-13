@@ -15,8 +15,6 @@ form.addEventListener("submit", async (event) => {
   
   await withLoading(async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
       const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
         headers: { Authorization: localStorage.getItem("token") },
       });
