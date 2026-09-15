@@ -2,7 +2,7 @@ const results = document.getElementById("results");
 
 async function loadWooCommerceCheck() {
   await withLoading(async () => {
-    const response = await fetch("/api/trees/positions/0/69999", {
+    const response = await fetch("/api/trees/positions/0/99999", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -43,6 +43,7 @@ async function loadWooCommerceCheck() {
           <th>Bag Size</th>
           <th>Price</th>
           <th>Transport Size</th>
+          <th>Position</th>
         </tr>
 
         ${wcTrees
@@ -58,6 +59,7 @@ async function loadWooCommerceCheck() {
                 <td>${tree.bagSize || ""}</td>
                 <td>${tree.price || ""}</td>
                 <td>${tree.transportSize || ""}</td>
+                <td>${tree.position || ""}</td>
               </tr>
             `,
           )
