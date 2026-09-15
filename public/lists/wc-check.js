@@ -2,7 +2,7 @@ const results = document.getElementById("results");
 
 async function loadWooCommerceCheck() {
   await withLoading(async () => {
-    const response = await fetch("/api/trees/positions/0/999999", {
+    const response = await fetch("/api/trees/positions/0/69999", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
