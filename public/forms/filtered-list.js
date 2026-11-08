@@ -10,7 +10,7 @@ const maxSellScoreInput = document.getElementById("maxSellScore");
 console.log("min:", minSellScoreInput);
 console.log("max:", maxSellScoreInput);
 const notesContainsInput = document.getElementById("notesContains");
-const notesGeneralNotEmptyInput = document.getElementById("notesGeneralNotEmpty");
+const notesNotEmptyInput = document.getElementById("notesNotEmpty");
 const outsideTasksNotEmptyInput = document.getElementById("outsideTasksNotEmpty");
 const insideTasksNotEmptyInput = document.getElementById("insideTasksNotEmpty");
 const message = document.getElementById("message");
@@ -61,7 +61,6 @@ function renderTrees(trees) {
         <th>Bag size</th>
         <th>Sell score</th>
         <th>Notes</th>
-        <th>General notes</th>
         <th>Outside tasks</th>
         <th>Inside tasks</th>
       </tr>
@@ -78,7 +77,6 @@ function renderTrees(trees) {
               <td>${tree.bagSize || ""}</td>
               <td>${tree.sellScore ?? ""}</td>
               <td>${(tree.notes || "").replace(/</g, "&lt;")}</td>
-              <td>${(tree.notesGeneral || "").replace(/</g, "&lt;")}</td>
               <td>${(tree.outsideTasks || "").replace(/</g, "&lt;")}</td>
               <td>${(tree.insideTasks || "").replace(/</g, "&lt;")}</td>
             </tr>
@@ -104,7 +102,7 @@ function applyFilters(trees) {
     ? Number(maxSellScoreInput.value)
     : null;
   const notesFilter = notesContainsInput.value.trim();
-  const notesGeneralNotEmpty = notesGeneralNotEmptyInput.checked;
+  const notesNotEmpty = notesNotEmptyInput.checked;
   const outsideTasksNotEmpty = outsideTasksNotEmptyInput.checked;
   const insideTasksNotEmpty = insideTasksNotEmptyInput.checked;
 
@@ -133,8 +131,7 @@ function applyFilters(trees) {
     }
 
     if (notesFilter && !matchContains(tree.notes, notesFilter)) return false;
-
-    if (notesGeneralNotEmpty && !tree.notesGeneral?.trim()) return false;
+    if (notesNotEmpty && !tree.notes?.trim()) return false;
     if (outsideTasksNotEmpty && !tree.outsideTasks?.trim()) return false;
     if (insideTasksNotEmpty && !tree.insideTasks?.trim()) return false;
 
@@ -225,7 +222,7 @@ clearBtn.addEventListener("click", () => {
   lastPositionInput.value = "";
   minSellScoreInput.value = "";
   notesContainsInput.value = "";
-  notesGeneralNotEmptyInput.checked = false;
+  notesNotEmptyInput.checked = false;
   outsideTasksNotEmptyInput.checked = false;
   insideTasksNotEmptyInput.checked = false;
   message.textContent = "";
