@@ -127,16 +127,18 @@ app.use(express.static("public"));
 const FrangipaniTrees = require("./backend/models/FrangipaniTree");
 
 app.get("/api/trees/turnon", auth, async (req, res) => {
-  try {
-    const items = await FrangipaniTree.find({
-      wcStatus: { $ne: "on" },
-      sellScore: { $gte: 7 },
-    });
+    try {
+      const items = await FrangipaniTree.find({
+        wcStatus: {
+          $in: ["off", "0", "Never added to WC"],
+        },
+        sellScore: { $gte: 7 },
+      });
 
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+      res.json(items);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
 });
 
 app.get("/api/trees/turnoff", auth, async (req, res) => {
