@@ -33,6 +33,8 @@ async function loadTurnOnList() {
         <th>Colour</th>
         <th>Price</th>
         <th>WC Status</th>
+        <th>Outside Tasks</th>
+        <th>Inside Tasks</th>
       </tr>
 
       ${trees
@@ -40,11 +42,13 @@ async function loadTurnOnList() {
           (tree) => `
             <tr>
               <td>${tree.sellScore}</td>
-              <td><a href="/tree-data/tree-view.html?tag=${tree.tag}">${tree.tag}</a></td>
+              <td><a href="/tree-data/tree-view.html?tag=${encodeURIComponent(tree.tag)}">${tree.tag}</a></td>
               <td>${tree.position}</td>
-              <td>${tree.colour}</td>
+              <td>${tree.colour || ""}</td>
               <td>${tree.price || ""}</td>
               <td>${tree.wcStatus || "(blank)"}</td>
+              <td>${tree.outsideTasks || ""}</td>
+              <td>${tree.insideTasks || ""}</td>
             </tr>
           `,
         )
