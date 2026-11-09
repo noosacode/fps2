@@ -159,17 +159,37 @@ app.get("/api/summary/colours", async (req, res) => {
   try {
     const colours = await FrangipaniTree.aggregate([
       {
-        $match: {
-          position: { $gte: 100, $lte: 6999 },
-        },
-      },
-      {
         $group: {
           _id: "$colour",
-          nursery: { $sum: 1 },
+
+          nursery: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$position", 100] },
+                    { $lte: ["$position", 6999] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+
           published: {
             $sum: {
-              $cond: [{ $eq: ["$wcStatus", "on"] }, 1, 0],
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$position", 100] },
+                    { $lte: ["$position", 6999] },
+                    { $eq: ["$wcStatus", "on"] },
+                  ],
+                },
+                1,
+                0,
+              ],
             },
           },
         },
