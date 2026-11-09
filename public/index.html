@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <header class="app-header">
@@ -29,10 +27,15 @@
 <body>
     <!-- Login Form -->
     <div id="login-box">
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button id="login-btn">Login</button>
-        <button id="logout-btn" style="display: none;">Logout</button>
+        <div id="login-form">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button id="login-btn">Login</button>
+        </div>
+    
+        <div id="logged-in-area" style="display: none;">
+            <button id="logout-btn">Logout</button>
+        </div>
     </div>
     <div id="loading">Loading…</div>
     
@@ -41,18 +44,7 @@
         <a href="/forms/find-tree.html" class="home-card">
             <h2>Find a Tree</h2>
         </a>
-    
-        <a href="/forms/positions.html" class="home-card">
-            <h2>Tree Positions</h2>
-        </a>
-    
-        <a href="/forms/tree-history.html" class="home-card">
-            <h2>Tree History</h2>
-        </a>
-    
-    </div>
-    <div class="home-grid">
-    
+        
         <a href="/lists/outside-tasks.html" class="home-card">
             <h2>Outside Tasks</h2>
         </a>
@@ -61,6 +53,49 @@
             <h2>Inside Tasks</h2>
         </a>
     
+    </div>
+    <div class="home-grid">
+    
+        <a href="/forms/filtered-list.html" class="home-card-secondary">
+            <h2>Filtered Search</h2>
+        </a>
+    
+        <a href="/forms/positions.html" class="home-card-secondary">
+            <h2>Update Positions</h2>
+        </a>
+    
+        <a href="/lists/turnoff.html" class="home-card-secondary">
+            <h2>Trees to Turn Off</h2>
+        </a>
+    
+        <a href="/lists/turnon.html" class="home-card-secondary">
+            <h2>Trees to Turn On</h2>
+        </a>
+    
+        <a href="/forms/positions.html" class="home-card-secondary">
+            <h2>Tree Positions</h2>
+        </a>
+    
+        <a href="/forms/tree-history.html" class="home-card-secondary">
+            <h2>Tree History</h2>
+        </a>
+
+                <a href="/forms/positions.html" class="home-card-secondary">
+            <h2>Tree Positions</h2>
+        </a>
+    
+        <a href="/forms/tree-history.html" class="home-card-secondary">
+            <h2>Tree History</h2>
+        </a>
+
+        <a href="/lists/summary.html" class="home-card-secondary">
+            <h2>Stock & Online Listings</h2>
+        </a>
+        
+        <a href="/lists/wc-check.html" class="home-card-secondary">
+            <h2>WooCommerce Check</h2>
+        </a>
+
     </div>
 
     <script src="/js/shared-frontend.js"></script>
