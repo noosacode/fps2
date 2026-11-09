@@ -24,13 +24,7 @@ form.addEventListener("submit", async (event) => {
 
   try {
     await withLoading(async () => {
-      const response = await fetch(`/api/events/${encodeURIComponent(tag)}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      if (handleAuthFailure(response)) return;
+      const response = await fetch(`/api/events/${encodeURIComponent(tag)}`);
 
       const data = await response.json();
       const events = data.events;

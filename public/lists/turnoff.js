@@ -2,13 +2,7 @@ const results = document.getElementById("results");
 
 async function loadTurnOffList() {
   await withLoading(async () => {
-    const response = await fetch("/api/trees/turnoff", {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-
-    if (handleAuthFailure(response)) return;
+    const response = await fetch("/api/trees/turnoff");
 
     const trees = await response.json();
 

@@ -191,6 +191,11 @@ th {
     background: #edf3ee;
 }
 
+.group-row {
+    background: #edf3ee;
+    font-weight: bold;
+}
+
 .header-row {
     display: flex;
     align-items: center;

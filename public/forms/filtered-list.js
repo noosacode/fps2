@@ -167,13 +167,7 @@ form.addEventListener("submit", async (event) => {
 
   try {
     await withLoading(async () => {
-      const response = await fetch(`/api/trees/positions/${start}/${end}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      if (handleAuthFailure(response)) return;
+      const response = await fetch(`/api/trees/positions/${start}/${end}`);
 
       const trees = await response.json();
 

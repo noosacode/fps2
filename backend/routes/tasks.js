@@ -3,7 +3,7 @@ const router = express.Router();
 const FrangipaniTree = require("../models/FrangipaniTree"); // adjust path
 const auth = require("../middleware/auth"); // adjust path
 
-router.get("/outside", auth, async (req, res) => {
+router.get("/outside", async (req, res) => {
   try {
     const tally = await FrangipaniTree.aggregate([
       { $match: { outsideTasks: { $nin: [null, ""] } } },
@@ -23,7 +23,7 @@ router.get("/outside", auth, async (req, res) => {
   }
 });
 
-router.get("/outside/:taskName", auth, async (req, res) => {
+router.get("/outside/:taskName", async (req, res) => {
   try {
     const trees = await FrangipaniTree.find(
       { outsideTasks: req.params.taskName },
@@ -36,7 +36,7 @@ router.get("/outside/:taskName", auth, async (req, res) => {
   }
 });
 
-router.get("/inside", auth, async (req, res) => {
+router.get("/inside", async (req, res) => {
   try {
     const tally = await FrangipaniTree.aggregate([
       { $match: { insideTasks: { $nin: [null, ""] } } },
@@ -56,7 +56,7 @@ router.get("/inside", auth, async (req, res) => {
   }
 });
 
-router.get("/inside/:taskName", auth, async (req, res) => {
+router.get("/inside/:taskName", async (req, res) => {
   try {
     const trees = await FrangipaniTree.find(
       { insideTasks: req.params.taskName },

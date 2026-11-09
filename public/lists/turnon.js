@@ -2,13 +2,7 @@ const results = document.getElementById("results");
 
 async function loadTurnOnList() {
   await withLoading(async () => {
-    const response = await fetch("/api/trees/turnon", {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-
-    if (handleAuthFailure(response)) return;
+    const response = await fetch("/api/trees/turnon");
 
     const trees = await response.json();
 

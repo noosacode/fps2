@@ -15,11 +15,7 @@ form.addEventListener("submit", async (event) => {
   
   await withLoading(async () => {
     try {
-      const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-
-      if (handleAuthFailure(response)) return;
+      const response = await fetch(`/api/trees/${encodeURIComponent(tag)}`);
 
       if (response.ok) {
         window.location.href = `/tree-data/tree-view.html?tag=${encodeURIComponent(tag)}`;

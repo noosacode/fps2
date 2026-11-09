@@ -5,6 +5,7 @@ console.log(process.env.MONGODB_URI?.substring(0, 30));
 const mongoose = require("mongoose");
 const FrangipaniTree = require("./backend/models/FrangipaniTree");
 const Fp2Event = require("./backend/models/Fp2Event");
+const ColourPriority = require("./backend/models/ColourPriority");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("./backend/models/User");
@@ -126,7 +127,7 @@ app.use(express.static("public"));
 
 const FrangipaniTrees = require("./backend/models/FrangipaniTree");
 
-app.get("/api/trees/turnon", auth, async (req, res) => {
+app.get("/api/trees/turnon", async (req, res) => {
     try {
       const items = await FrangipaniTree.find({
         wcStatus: {
@@ -141,7 +142,7 @@ app.get("/api/trees/turnon", auth, async (req, res) => {
     }
 });
 
-app.get("/api/trees/turnoff", auth, async (req, res) => {
+app.get("/api/trees/turnoff", async (req, res) => {
   try {
     const items = await FrangipaniTree.find({
       wcStatus: "on",
@@ -154,24 +155,158 @@ app.get("/api/trees/turnoff", auth, async (req, res) => {
   }
 });
 
-app.get("/api/summary/colours", auth, async (req, res) => {
+app.get("/api/summary/colours", async (req, res) => {
   try {
     const colours = await FrangipaniTree.aggregate([
       {
-        $group: {
-          _id: "$colour",
-          count: { $sum: 1 },
+        $match: {
+          position: { $gte: 100, $lte: 6999 },
         },
       },
       {
-        $sort: { count: -1 },
+        $group: {
+          _id: "$colour",
+          nursery: { $sum: 1 },
+          published: {
+            $sum: {
+              $cond: [{ $eq: ["$wcStatus", "on"] }, 1, 0],
+            },
+          },
+        },
+      },
+      {
+        $sort: {
+          nursery: -1,
+          published: 1,
+          _id: 1,
+        },
       },
     ]);
 
-    res.json(colours);
+    app.get("/api/summary/colours/:colour/sizes", async (req, res) => {
+      try {
+        const sizeCounts = await FrangipaniTree.aggregate([
+          {
+            $match: {
+              colour: req.params.colour,
+              position: { $gte: 100, $lte: 6999 },
+            },
+          },
+          {
+            $group: {
+              _id: "$bagSize",
+              nursery: { $sum: 1 },
+              published: {
+                $sum: {
+                  $cond: [{ $eq: ["$wcStatus", "on"] }, 1, 0],
+                },
+              },
+            },
+          },
+        ]);
+
+        const sizeOrder = [
+          "0",
+          "2",
+          "20",
+          "25",
+          "35",
+          "45",
+          "75",
+          "100",
+          "150",
+          "200",
+          "250",
+          "300",
+          "350",
+          "400",
+          "500",
+        ];
+
+        const sizeMap = new Map();
+
+        sizeOrder.forEach((size) => {
+          sizeMap.set(size, {
+            size,
+            nursery: 0,
+            published: 0,
+          });
+        });
+
+        sizeCounts.forEach((item) => {
+          let size = String(item._id ?? "0");
+
+          if (size === "Not recorded yet") {
+            size = "0";
+          }
+
+          if (sizeMap.has(size)) {
+            sizeMap.set(size, {
+              size,
+              nursery: item.nursery,
+              published: item.published,
+            });
+          } else {
+            // Preserve any unexpected sizes rather than losing their counts.
+            sizeMap.set(size, {
+              size,
+              nursery: item.nursery,
+              published: item.published,
+            });
+          }
+        });
+
+        res.json({
+          colour: req.params.colour,
+          sizes: [...sizeMap.values()],
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to load colour size summary" });
+      }
+    });
+
+    const priorities = await ColourPriority.find();
+
+    const priorityMap = {};
+
+    priorities.forEach((item) => {
+      priorityMap[item.colour] = item.priority;
+    });
+
+    const summary = colours.map((item) => ({
+      ...item,
+      priority: priorityMap[item._id] ?? 0,
+    }));
+
+    res.json(summary);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to load colour summary" });
+  }
+});
+
+
+app.put("/api/summary/colours/:colour", auth, async (req, res) => {
+  try {
+    const priority = Number(req.body.priority);
+
+    if (!Number.isInteger(priority) || priority < 0 || priority > 100) {
+      return res
+        .status(400)
+        .json({ error: "Priority must be a whole number from 0 to 100" });
+    }
+
+    const result = await ColourPriority.findOneAndUpdate(
+      { colour: req.params.colour },
+      { priority },
+      { returnDocument: "after", upsert: true, runValidators: true },
+    );
+
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to save priority" });
   }
 });
 
@@ -277,7 +412,7 @@ app.put("/api/trees/cleanup-notes/:tag", auth, async (req, res) => {
   }
 });
 
-app.get("/api/trees/:tag", auth, async function (req, res) {
+app.get("/api/trees/:tag", async function (req, res) {
   const tree = await FrangipaniTree.findOne({
     tag: req.params.tag,
   });
@@ -291,7 +426,7 @@ app.get("/api/trees/:tag", auth, async function (req, res) {
   res.json(tree);
 });
 
-app.get("/api/trees/positions/:first/:last", auth, async function (req, res) {
+app.get("/api/trees/positions/:first/:last", async function (req, res) {
   const trees = await FrangipaniTree.find({
     position: {
       $gte: Number(req.params.first),
@@ -482,7 +617,7 @@ app.delete("/api/trees/:tag", auth, async (req, res) => {
   }
 });
 
-app.get("/api/events/:tag", auth, async function (req, res) {
+app.get("/api/events/:tag", async function (req, res) {
   const tree = await FrangipaniTree.findOne({
     tag: req.params.tag,
   });

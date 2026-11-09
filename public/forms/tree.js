@@ -5,11 +5,7 @@ const results = document.getElementById("results");
 async function findTree() {
   const tag = tagInput.value;
 
-  const response = await fetch(`/api/trees/${tag}`, {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
+  const response = await fetch(`/api/trees/${tag}`);
 
   let tree = await response.json();
 
