@@ -652,6 +652,28 @@ app.get("/api/events/:tag", async function (req, res) {
   });
 });
 
+app.delete("/api/events/:tag/:eventId", auth, async function (req, res) {
+  try {
+    const result = await Fp2Event.deleteOne({
+      _id: req.params.eventId,
+      tag: req.params.tag,
+    });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({
+        error: "History entry not found",
+      });
+    }
+
+    res.json({ message: "History entry deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to delete history entry",
+    });
+  }
+});
+
 app.post("/api/trees", auth, async function (req, res) {
   try {
     const tree = new FrangipaniTree(req.body);
